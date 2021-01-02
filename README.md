@@ -1,0 +1,2 @@
+# ExCoreData
+CoreDataを使いやすくするためのライブラリー
