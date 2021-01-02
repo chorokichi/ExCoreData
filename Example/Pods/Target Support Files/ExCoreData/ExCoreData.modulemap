@@ -1,0 +1,6 @@
+framework module ExCoreData {
+  umbrella header "ExCoreData-umbrella.h"
+
+  export *
+  module * { export * }
+}
