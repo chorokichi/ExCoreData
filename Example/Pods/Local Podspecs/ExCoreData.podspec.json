@@ -1,9 +1,9 @@
 {
   "name": "ExCoreData",
   "version": "0.1.0",
-  "summary": "A short description of ExCoreData.",
-  "description": "TODO: Add long description of the pod here.",
-  "homepage": "https://github.com/Jirokichi/ExCoreData",
+  "summary": "ExCoreData provides easy ways to use CoreData.",
+  "description": "ExCoreData provides easy ways to use CoreData",
+  "homepage": "https://github.com/chorokichi/ExCoreData",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
@@ -12,11 +12,16 @@
     "Jirokichi": "kdy.developer@gmail.com"
   },
   "source": {
-    "git": "https://github.com/Jirokichi/ExCoreData.git",
+    "git": "https://github.com/chorokichi/ExCoreData.git",
     "tag": "0.1.0"
   },
   "platforms": {
-    "ios": "9.0"
+    "ios": "11.0"
   },
-  "source_files": "ExCoreData/Classes/**/*"
+  "source_files": "ExCoreData/Classes/**/*",
+  "dependencies": {
+    "ExLog": [
+
+    ]
+  }
 }

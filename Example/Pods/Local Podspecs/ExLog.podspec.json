@@ -1,0 +1,24 @@
+{
+  "name": "ExLog",
+  "version": "0.3.2",
+  "summary": "iOS用簡易ログライブラリー",
+  "description": "ログ出力をサポートするライブラリー。フォーマットされたログをコンソール及びファイルとして出力することが可能。\nファイルはExLog/Debugが有効なときのみdocumentDirectory下にdebug-log.logとして作成される。",
+  "homepage": "https://github.com/chorokichi/ExLog.git",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Chorokichi": "kdy.developer@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/chorokichi/ExLog.git",
+    "tag": "0.3.2"
+  },
+  "platforms": {
+    "ios": "11.0"
+  },
+  "swift_versions": "4.2",
+  "source_files": "ExLog/Classes/**/*",
+  "swift_version": "4.2"
+}

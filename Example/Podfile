@@ -12,5 +12,7 @@ target 'ExCoreData_Example' do
     pod 'Nimble', '~> 8.0.7'
     pod 'FBSnapshotTestCase' , '~> 2.1.4'
     pod 'Nimble-Snapshots' , '~> 8.0.0'
+    
+    pod 'ExLog', :git => 'https://github.com/chorokichi/ExLog.git'
   end
 end

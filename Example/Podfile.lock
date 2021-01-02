@@ -1,5 +1,7 @@
 PODS:
-  - ExCoreData (0.1.0)
+  - ExCoreData (0.1.0):
+    - ExLog
+  - ExLog (0.3.2)
   - FBSnapshotTestCase (2.1.4):
     - FBSnapshotTestCase/SwiftSupport (= 2.1.4)
   - FBSnapshotTestCase/Core (2.1.4)
@@ -20,6 +22,7 @@ PODS:
 
 DEPENDENCIES:
   - ExCoreData (from `../`)
+  - ExLog (from `https://github.com/chorokichi/ExLog.git`)
   - FBSnapshotTestCase (~> 2.1.4)
   - Nimble (~> 8.0.7)
   - Nimble-Snapshots (~> 8.0.0)
@@ -36,15 +39,23 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   ExCoreData:
     :path: "../"
+  ExLog:
+    :git: https://github.com/chorokichi/ExLog.git
+
+CHECKOUT OPTIONS:
+  ExLog:
+    :commit: 947b1898c3235c3b0a81ad6a324677140af7ccf7
+    :git: https://github.com/chorokichi/ExLog.git
 
 SPEC CHECKSUMS:
-  ExCoreData: a86490933c64fc403a6eb2ca5341e0c5243808e5
+  ExCoreData: 6b7c625ecfeb41188bc7cd38fb6bd3d3beca8d11
+  ExLog: 63ba09edeec69aa198734d659c3ba1b3b15d9857
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
   iOSSnapshotTestCase: 9ab44cb5aa62b84d31847f40680112e15ec579a6
   Nimble: 98b888285a615fd34f20e61753cf58ea1402bde4
   Nimble-Snapshots: 8ec63f41ce6c7229a17be9a64edbc123b181f75b
   Quick: f5754d69b7013f5864c29aab9ae6f0c79c5bc200
 
-PODFILE CHECKSUM: 461e401bf1624fc764f478172186d8ef87325b6e
+PODFILE CHECKSUM: 2a63e59d4b6b15cfc24668adddee2141037924dc
 
 COCOAPODS: 1.10.0

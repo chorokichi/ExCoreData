@@ -1,0 +1,6 @@
+framework module ExLog {
+  umbrella header "ExLog-umbrella.h"
+
+  export *
+  module * { export * }
+}
