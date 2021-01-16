@@ -30,18 +30,22 @@ class ExCoreDataSpec: QuickSpec {
             context("handleTwoExCoreDataClass"){
                 handleTwoCoreDataClass()
             }
+            
+            context("stress"){
+                stressTest()
+            }
         }
     }
     
     private func normal(){
         var coreDataContext:NSManagedObjectContext? = nil
         beforeEach {
-            coreDataContext = self.initDB()
+            coreDataContext = ExCoreDataTestUtil.initDB()
         }
         
         afterEach {
             ExLog.log("# AfterEach")
-            self.cleanDB(ExampleCoreData.self)
+            ExCoreDataTestUtil.cleanDB(ExampleCoreData.self)
         }
         
         it("Static Variable"){
@@ -70,7 +74,7 @@ class ExCoreDataSpec: QuickSpec {
     private func initializeProcess(){
         afterEach {
             ExLog.log("# AfterEach")
-            self.cleanDB(ExampleCoreData.self)
+            ExCoreDataTestUtil.cleanDB(ExampleCoreData.self)
         }
         
         context("Status"){
@@ -165,12 +169,12 @@ class ExCoreDataSpec: QuickSpec {
     
     private func delete(){
         beforeEach {
-            _ = self.initDB()
+            _ = ExCoreDataTestUtil.initDB()
         }
         
         afterEach {
             ExLog.log("# AfterEach")
-            self.cleanDB(ExampleCoreData.self)
+            ExCoreDataTestUtil.cleanDB(ExampleCoreData.self)
         }
         
         it("success"){
@@ -200,11 +204,11 @@ class ExCoreDataSpec: QuickSpec {
         }
         
         beforeEach{
-            _ = self.initDB()
+            _ = ExCoreDataTestUtil.initDB()
         }
         afterEach{
-            self.cleanDB(ExampleCoreData.self)
-            self.cleanDB(SecondCoreData.self)
+            ExCoreDataTestUtil.cleanDB(ExampleCoreData.self)
+            ExCoreDataTestUtil.cleanDB(SecondCoreData.self)
         }
         
         it("Create 2 ExCoreData"){
@@ -228,37 +232,65 @@ class ExCoreDataSpec: QuickSpec {
             expect(ExampleCoreData.getCoreDataNum()) == 1
         }
     }
+    
+    private func stressTest(){
+        afterEach{
+            ExCoreDataTestUtil.cleanDB(ExampleCoreData.self)
+        }
+        
+        it("ParallelOnManyThread"){
+            var status1: ExCoreDataInitStatus<NSManagedObjectContext, Error>? = nil
+            var status2: ExCoreDataInitStatus<NSManagedObjectContext, Error>? = nil
+            var status3: ExCoreDataInitStatus<NSManagedObjectContext, Error>? = nil
+            DispatchQueue.global(qos: .userInteractive).async {
+                ExLog.log(Thread.current)
+                ExampleCoreData.initInstance { status1 = $0 }
+            }
+            DispatchQueue.global(qos: .userInteractive).async {
+                ExLog.log(Thread.current)
+                ExampleCoreData.initInstance { status2 = $0 }
+            }
+            DispatchQueue.global(qos: .userInitiated).async {
+                ExLog.log(Thread.current)
+                ExampleCoreData.initInstance { status3 = $0 }
+            }
+            
+            expect(status1).toNotEventually(beNil(), timeout: 5)
+            expect(status2).toNotEventually(beNil(), timeout: 5)
+            expect(status3).toNotEventually(beNil(), timeout: 5)
+            
+            ExLog.log(status1)
+            ExLog.log(status2)
+            ExLog.log(status3)
+            expect(ExampleCoreData.getCoreDataNum()) == 1
+        }
+        
+        it("ParallelOnMain"){
+            var status1: ExCoreDataInitStatus<NSManagedObjectContext, Error>? = nil
+            var status2: ExCoreDataInitStatus<NSManagedObjectContext, Error>? = nil
+            var status3: ExCoreDataInitStatus<NSManagedObjectContext, Error>? = nil
+            DispatchQueue.main.async {
+                ExLog.log(Thread.current)
+                ExampleCoreData.initInstance { status1 = $0 }
+            }
+            DispatchQueue.main.async {
+                ExLog.log(Thread.current)
+                ExampleCoreData.initInstance { status2 = $0 }
+            }
+            DispatchQueue.main.async {
+                ExLog.log(Thread.current)
+                ExampleCoreData.initInstance { status3 = $0 }
+            }
+            
+            expect(status1).toNotEventually(beNil(), timeout: 5)
+            expect(status2).toNotEventually(beNil(), timeout: 5)
+            expect(status3).toNotEventually(beNil(), timeout: 5)
+            
+            ExLog.log(status1)
+            ExLog.log(status2)
+            ExLog.log(status3)
+            expect(ExampleCoreData.getCoreDataNum()) == 1
+        }
+    }
 }
 
-/// 各テスト共通に利用する目的のメソッド
-extension ExCoreDataSpec{
-    private func initDB() -> NSManagedObjectContext{
-        var status: ExCoreDataInitStatus<NSManagedObjectContext, Error>? = nil
-        ExLog.log("#[初期化処理] contextの生成")
-        ExampleCoreData.initInstance { status = $0 }
-        expect(status).toNotEventually(beNil(), timeout: 5)
-        
-        let coreDataContext:NSManagedObjectContext?
-        switch status{
-        case .success(let context):
-            coreDataContext = context
-        default:
-            fail()
-            coreDataContext = nil
-        }
-        ExLog.log("# contextの生成終: \(String(describing: status))")
-        return coreDataContext!
-    }
-    
-    private func cleanDB<Core: ExCoreData>(_ type: Core.Type){
-        guard Core.getContext() != nil else{
-            return
-        }
-        
-        var result = false
-        Core.deleteStore {
-            result = true
-        }
-        expect(result).toEventually(beTrue(), timeout: 10)
-    }
-}

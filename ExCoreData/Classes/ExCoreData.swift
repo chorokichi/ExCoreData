@@ -61,8 +61,10 @@ open class ExCoreData {
     
     /// ⚠️⚠️⚠️このメソッドは直接呼び出してはいけない！！！！⚠️⚠️⚠️
     ///
-    /// 理由
-    /// - 本当はprivateにしたいがinitInstanceメソッドで初期化する際にpublicにしておく必要がある
+    /// [publicにしている理由]
+    /// - 本当はprivateにしたいがinitInstanceメソッドで初期化する際に下記理由でpublic requiredにしておく必要がある
+    /// - initをメタタイプから呼べるようにするためにはrequiredが必要
+    /// - requiredをつけたinitは子クラスから呼ばれる可能性があるのでpublicにする必要がある
     public required init(completionHandler: @escaping (ExCoreDataInitStatus<NSManagedObjectContext, Error>) -> Void) {
         ExLog.log("\(ExCoreData.LogTag)\"\(self)\"の初期化処理開始...")
         self.createInstance() { (result: ExCoreDataResult<CoreDataStore, Error>) in
@@ -79,8 +81,14 @@ open class ExCoreData {
         }
     }
     
+
+    /// https://www.wantedly.com/companies/Supership/post_articles/57547
+    private static let sem = DispatchSemaphore(value: 1)
+    
     /// initInstanceを複数のスレッドから呼ぶことを許容しない(UIスレッドである必要はない)。
-    public class func initInstance(completionHandler: @escaping (ExCoreDataInitStatus<NSManagedObjectContext, Error>) -> Void) {
+    public static func initInstance(completionHandler: @escaping (ExCoreDataInitStatus<NSManagedObjectContext, Error>) -> Void) {
+        defer { sem.signal() }
+        sem.wait()
         if let instance = self.getInstance() {
             ExLog.log("\(ExCoreData.LogTag)すでに\"\(self)\"のインスタンスあり -> 初期化不要")
             if instance.store != nil {
@@ -91,13 +99,16 @@ open class ExCoreData {
                 completionHandler(.initializing)
             }
         } else {
-            ExLog.log("\(ExCoreData.LogTag)まだインスタンスなし -> 初期化実施")
+            ExLog.log("\(ExCoreData.LogTag)まだインスタンスなし -> 初期化開始")
             let instance = self.init { (status: ExCoreDataInitStatus<NSManagedObjectContext, Error>) in
                 switch status{
                 case .failure(_):
+                    ExLog.log("\(ExCoreData.LogTag)\t=> 初期化失敗")
                     for instance in ExCoreData._Instance where self == type(of: instance){
                         ExCoreData._Instance.removeAll(where: {type(of: $0) == type(of: instance)})
                     }
+                case .success(_):
+                    ExLog.log("\(ExCoreData.LogTag)\t=> 初期化成功")
                 default:
                     break
                 }
@@ -107,7 +118,9 @@ open class ExCoreData {
             
             // 初期化の成功失敗に関わらず._Instanceに保存する。
             // 初期化中にinitInstanceが再度呼ばれると並行して処理が走ってしまうため
+            ExLog.log("\(ExCoreData.LogTag)_Instanceとして保存中...")
             ExCoreData._Instance.append(instance)
+            ExLog.log("\(ExCoreData.LogTag)_Instanceとして保存完了！")
         }
     }
     

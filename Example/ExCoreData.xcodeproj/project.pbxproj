@@ -19,6 +19,8 @@
 		FA57991325A0C57500922695 /* SimpleUser+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57991125A0C57500922695 /* SimpleUser+CoreDataClass.swift */; };
 		FA57991425A0C57500922695 /* SimpleUser+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57991225A0C57500922695 /* SimpleUser+CoreDataProperties.swift */; };
 		FA57991825A0C64500922695 /* ExmapleCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57991725A0C64500922695 /* ExmapleCoreData.swift */; };
+		FA8A17C125B32E5B00BEF2BB /* ExCoreDataTestUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A17C025B32E5B00BEF2BB /* ExCoreDataTestUtil.swift */; };
+		FA8A17D525B333C400BEF2BB /* ExCoreDataMessureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A17D425B333C400BEF2BB /* ExCoreDataMessureTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,8 @@
 		FA57991125A0C57500922695 /* SimpleUser+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SimpleUser+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FA57991225A0C57500922695 /* SimpleUser+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SimpleUser+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FA57991725A0C64500922695 /* ExmapleCoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExmapleCoreData.swift; sourceTree = "<group>"; };
+		FA8A17C025B32E5B00BEF2BB /* ExCoreDataTestUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExCoreDataTestUtil.swift; sourceTree = "<group>"; };
+		FA8A17D425B333C400BEF2BB /* ExCoreDataMessureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExCoreDataMessureTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +131,8 @@
 			isa = PBXGroup;
 			children = (
 				607FACEB1AFB9204008FA782 /* ExCoreDataSpec.swift */,
+				FA8A17D425B333C400BEF2BB /* ExCoreDataMessureTests.swift */,
+				FA8A17C025B32E5B00BEF2BB /* ExCoreDataTestUtil.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
 			path = Tests;
@@ -395,6 +401,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				607FACEC1AFB9204008FA782 /* ExCoreDataSpec.swift in Sources */,
+				FA8A17D525B333C400BEF2BB /* ExCoreDataMessureTests.swift in Sources */,
+				FA8A17C125B32E5B00BEF2BB /* ExCoreDataTestUtil.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
