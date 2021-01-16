@@ -9,6 +9,8 @@
 import Foundation
 
 open class ExLog{
+    /// https://www.wantedly.com/companies/Supership/post_articles/57547
+    private static let sem = DispatchSemaphore(value: 1)
     
     /// ファイルにログを出力するかどうか
     /// ```
@@ -57,6 +59,10 @@ open class ExLog{
         guard Debug else{
             return
         }
+        
+        // Thread Safeにするためにセマフォで処理の管理を実施
+        defer { sem.signal() }
+        sem.wait()
         
         let now = Date()
         

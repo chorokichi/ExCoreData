@@ -1,7 +1,7 @@
 PODS:
   - ExCoreData (0.1.0):
     - ExLog
-  - ExLog (0.3.2)
+  - ExLog (0.4.0)
   - FBSnapshotTestCase (2.1.4):
     - FBSnapshotTestCase/SwiftSupport (= 2.1.4)
   - FBSnapshotTestCase/Core (2.1.4)
@@ -44,12 +44,12 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   ExLog:
-    :commit: 947b1898c3235c3b0a81ad6a324677140af7ccf7
+    :commit: 05b489042be8f02d968ea6fb98ba205bd3bf4976
     :git: https://github.com/chorokichi/ExLog.git
 
 SPEC CHECKSUMS:
   ExCoreData: 6b7c625ecfeb41188bc7cd38fb6bd3d3beca8d11
-  ExLog: 63ba09edeec69aa198734d659c3ba1b3b15d9857
+  ExLog: 51b9a2ae49ceb6f231c0377b983c4a1b362dd292
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
   iOSSnapshotTestCase: 9ab44cb5aa62b84d31847f40680112e15ec579a6
   Nimble: 98b888285a615fd34f20e61753cf58ea1402bde4
