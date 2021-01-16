@@ -24,11 +24,16 @@ import ExLog
 open class ExCoreData {
     fileprivate static let LogTag = "[ExCoreData]"
     
+    deinit {
+        ExLog.log("\(ExCoreData.LogTag) deinit...")
+    }
+    
     public typealias RequiredData = (xcDataModelName: String, packageName: String, storeDataName: String)
-    public enum Status: String {
-        case NotInitilazed
-        case Initializing
-        case Initilazed
+    public enum Status<NSManagedObjectContext, Error> {
+        case initializing
+        case initialized
+        case success(NSManagedObjectContext)
+        case failure(Error)
     }
     
     ///
@@ -53,57 +58,69 @@ open class ExCoreData {
     }
     
     public static func getCoreDataNum() -> Int {
-        return self._Instance.count
+        // self._InstanceにはinitInstanceを呼ぶと必ず代入され、その後初期化処理でエラーが発生すると削除する仕組みとなっている
+        // 初期化中のものをカウントしないようにfilterでstoreをもたないinstanceを除外している
+        return self._Instance.filter{$0.store != nil}.count
     }
     
-    var context: NSManagedObjectContext?
+    private var store: CoreDataStore? = nil
     
-    /// このメソッドは呼び出してはいけない！！！！
-    /// 補足：本当はprivateにしたいがinitInstanceメソッドで初期化する際にpublicにしておく必要がある()
-    public required init(completionHandler: @escaping (NSManagedObjectContext?) -> Void) {
+    /// ⚠️⚠️⚠️このメソッドは直接呼び出してはいけない！！！！⚠️⚠️⚠️
+    ///
+    /// 理由
+    /// - 本当はprivateにしたいがinitInstanceメソッドで初期化する際にpublicにしておく必要がある
+    public required init(completionHandler: @escaping (ExCoreData.Status<NSManagedObjectContext, Error>) -> Void) {
         ExLog.log("\(ExCoreData.LogTag)\"\(self)\"の初期化処理開始...")
-        ExCoreData.createInstance(requiredData: self.data) { (result: ExCoreDataResult<NSManagedObjectContext, Error>) in
+        self.createInstance() { (result: ExCoreDataResult<CoreDataStore, Error>) in
             ExLog.log("\(ExCoreData.LogTag)**** callback method")
             switch result {
-            case .failure:
+            case .failure(let error):
                 ExLog.error("\(ExCoreData.LogTag)**** failure")
-            case .success(let context):
+                completionHandler(.failure(error))
+            case .success(let store):
                 ExLog.log("\(ExCoreData.LogTag)**** success: \n\(self.description)")
-                self.context = context
-                completionHandler(context)
-                return
+                self.store = store
+                completionHandler(.success(store.context))
             }
-            
-            completionHandler(nil)
         }
     }
     
-    @discardableResult
-    public class func initInstance(completionHandler: @escaping (NSManagedObjectContext?) -> Void) -> ExCoreData.Status {
+    /// initInstanceを複数のスレッドから呼ぶことを許容しない(UIスレッドである必要はない)。
+    public class func initInstance(completionHandler: @escaping (ExCoreData.Status<NSManagedObjectContext, Error>) -> Void) {
         if let instance = self.getInstance() {
             ExLog.log("\(ExCoreData.LogTag)すでに\"\(self)\"のインスタンスあり -> 初期化不要")
-            if let context = instance.context {
+            if instance.store != nil {
                 ExLog.log("\(ExCoreData.LogTag)\t=> すでにコンテキストも初期化済み -> Initilized")
-                completionHandler(context)
-                return .Initilazed
+                completionHandler(.initialized)
             } else {
                 ExLog.log("\(ExCoreData.LogTag)\t=> まだコンテキストは初期化されていない。他のスレッドで実施中と判断。 -> Initializing")
-                completionHandler(nil)
-                return .Initializing
+                completionHandler(.initializing)
             }
         } else {
             ExLog.log("\(ExCoreData.LogTag)まだインスタンスなし -> 初期化実施")
-            let instance = self.init(completionHandler: completionHandler)
-            self._Instance.append(instance)
-            return .Initializing
+            let instance = self.init { (status: Status<NSManagedObjectContext, Error>) in
+                switch status{
+                case .failure(_):
+                    for instance in ExCoreData._Instance where self == type(of: instance){
+                        ExCoreData._Instance.removeAll(where: {type(of: $0) == type(of: instance)})
+                    }
+                default:
+                    break
+                }
+                
+                completionHandler(status)
+            }
+            
+            // 初期化の成功失敗に関わらず._Instanceに保存する。
+            // 初期化中にinitInstanceが再度呼ばれると並行して処理が走ってしまうため
+            ExCoreData._Instance.append(instance)
         }
     }
     
     /// コンテキストを返すメソッド
     /// 注意：先にinitInstanceでcontextを初期化していないと正常な値が返ってこない。このメソッドは確実にcontextが初期化されている場合のみ利用できる
     public static func getContext() -> NSManagedObjectContext? {
-        
-        if let instance = self.getInstance(), let context = instance.context {
+        if let instance = self.getInstance(), let context = instance.store?.context {
             return context
         } else {
             ExLog.error("\(ExCoreData.LogTag)まだ初期化されていません。先にinitInstanceが呼ばれて初期化される必要があります")
@@ -112,43 +129,59 @@ open class ExCoreData {
     }
     
     @available(OSX 10.11, *)
+    /// このクラスに関係するDBのファイルを削除しInstanceも削除する
     public static func deleteStore(completed: @escaping () -> Void) {
         guard let instance = self.getInstance() else {
             fatalError()
         }
-        self._Instance.removeAll(where: {$0.context == instance.context})
-        ExCoreData.createInstance(requiredData: instance.data) { (result: ExCoreDataResult<CoreDataHelper, Error>) in
-            switch result {
-            case .failure:
-                ExLog.log("\(ExCoreData.LogTag)Fail to get CoreDateSet instance.")
+        
+        if instance.deleteStore(){
+            guard let context = instance.store?.context else {
                 fatalError()
-            case .success(let set):
-                ExLog.log("\(ExCoreData.LogTag)Success to get CoreDateSet instance.")
-                set.deleteStore()
             }
-            completed()
+            self._Instance.removeAll(where: {$0.store?.context == context})
         }
+        
+        completed()
+    }
+    
+    /// DBのファイルを削除する
+    private func deleteStore() -> Bool{
+        guard let store = self.store else{
+            fatalError()
+        }
+        
+        let url = store.applicationDocumentsDirectory.appendingPathComponent(self.data.storeDataName)
+        ExLog.important("\(ExCoreData.LogTag)Delete - \(url.absoluteString)")
+        do {
+            try store.context.persistentStoreCoordinator?.destroyPersistentStore(at: url, ofType: NSSQLiteStoreType, options: nil)
+            return true
+        } catch {
+            ExLog.error("\(ExCoreData.LogTag)PersistentStore削除中にエラー発生... \(error)")
+        }
+        return false
     }
     
     /// DKCoreDataSetのインスタンスを別スレッド(userInteractive)上で作成して、初期化されたDKCoreDataSetをコールバックメソッド（メインスレッド上）の引数として取得する静的メソッド
     /// - parameter requiredData: XCDataモデル名(ex. TestTest.modのピリオドの前の部分)/パッケージ名(ex. jp.example.test1)/ストア名(ex. test.sqlite、補足：拡張子はsqliteを指定すること)
     /// - parameter didConfiguration: 初期化されたDKCoreDataSetインスタンスを含むDKResultを返すコールバック関数。Mainスレッド上での処理を保証する。
-    private static func createInstance(requiredData lData: ExCoreData.RequiredData, didConfiguration:@escaping (ExCoreDataResult<NSManagedObjectContext, Error>) -> Void) {
-        let performDidConfigurationOnMainForcefully = { (result: ExCoreDataResult<NSManagedObjectContext, Error>) -> Void in
+    private func createInstance(
+        completionHandler:@escaping (ExCoreDataResult<CoreDataStore, Error>) -> Void) {
+        let performDidConfigurationOnMainForcefully = { (result: ExCoreDataResult<CoreDataStore, Error>) -> Void in
             if Thread.isMainThread{
-                didConfiguration(result)
+                completionHandler(result)
                 return
             }
             
             DispatchQueue.main.async {
-                didConfiguration(result)
+                completionHandler(result)
             }
         }
         
         DispatchQueue.global(qos: .userInteractive).async {
             do {
-                let coreDataSet = try CoreDataHelper(requiredData: lData)
-                performDidConfigurationOnMainForcefully(ExCoreDataResult.success(coreDataSet.context))
+                let coreDataSet = try CoreDataStore(requiredData: self.data)
+                performDidConfigurationOnMainForcefully(ExCoreDataResult.success(coreDataSet))
             } catch {
                 performDidConfigurationOnMainForcefully(ExCoreDataResult.failure(error))
             }
@@ -156,16 +189,26 @@ open class ExCoreData {
     }
 }
 
-private class CoreDataHelper {
+extension ExCoreData {
+    open var description: String {
+        var msg = ""
+        msg = msg + "\t " + "xcDataModelName\t:" + self.data.xcDataModelName + "\n"
+        msg = msg + "\t " + "packageName\t\t:" + self.data.packageName + "\n"
+        msg = msg + "\t " + "storeDataName\t\t:" + self.data.storeDataName
+        return msg
+    }
+}
+
+private class CoreDataStore {
     // MARK: - [変数・関数] -
-    public let context: NSManagedObjectContext
+    let context: NSManagedObjectContext
     
     // MARK: [利用者が設定する定数]
-    internal let requiredData: ExCoreData.RequiredData
+    let requiredData: ExCoreData.RequiredData
     
     // MARK: [内部で利用する変数]
     /// Core Data store用ファイルを保存するためのフォルダーのパス
-    private let applicationDocumentsDirectory: URL
+    let applicationDocumentsDirectory: URL
     
     // MARK: [初期化処理]
     
@@ -251,26 +294,5 @@ private class CoreDataHelper {
         let url = self.applicationDocumentsDirectory.appendingPathComponent(self.requiredData.storeDataName)
         let options = [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: true]
         try coordinator!.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: options)
-    }
-    
-    @available(OSX 10.11, *)
-    public func deleteStore() {
-        let url = self.applicationDocumentsDirectory.appendingPathComponent(self.requiredData.storeDataName)
-        print("delete - \(url.absoluteString)")
-        do {
-            try self.context.persistentStoreCoordinator?.destroyPersistentStore(at: url, ofType: NSSQLiteStoreType, options: nil)
-        } catch {
-            print(error)
-        }
-    }
-}
-
-extension ExCoreData {
-    open var description: String {
-        var msg = "\t" + "CoreDataHelper:\n"
-        msg = msg + "\t " + "xcDataModelName\t:" + self.data.xcDataModelName + "\n"
-        msg = msg + "\t " + "packageName\t\t:" + self.data.packageName + "\n"
-        msg = msg + "\t " + "storeDataName\t\t:" + self.data.storeDataName
-        return msg
     }
 }

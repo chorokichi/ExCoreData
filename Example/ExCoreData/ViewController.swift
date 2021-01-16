@@ -7,18 +7,27 @@
 //
 
 import UIKit
+import CoreData
+import ExLog
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var loadingStachView: UIStackView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        self.startLoad()
+//        ExampleCoreData.initInstance { (context: NSManagedObjectContext?) in
+//            ExLog.log()
+//            self.endLoad()
+//        }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    private func startLoad(){
+        loadingStachView.isHidden = false
     }
-
+    
+    private func endLoad(){
+        loadingStachView.isHidden = true
+    }
 }
 
