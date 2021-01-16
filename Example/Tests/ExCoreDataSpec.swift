@@ -76,13 +76,13 @@ class ExCoreDataSpec: QuickSpec {
         context("Status"){
             it("initialized"){
                 // First Time
-                var firstStatus: ExCoreData.Status<NSManagedObjectContext, Error>? = nil
+                var firstStatus: ExCoreDataInitStatus<NSManagedObjectContext, Error>? = nil
                 ExampleCoreData.initInstance { firstStatus = $0 }
                 expect(firstStatus).toNotEventually(beNil(), timeout: 5)
                 expect("\(firstStatus!)").to(contain("success"))
                 
                 // Second Time
-                var secondStatus: ExCoreData.Status<NSManagedObjectContext, Error>? = nil
+                var secondStatus: ExCoreDataInitStatus<NSManagedObjectContext, Error>? = nil
                 ExampleCoreData.initInstance { secondStatus = $0 }
                 expect(secondStatus).toNotEventually(beNil(), timeout: 5)
                 expect("\(secondStatus!)").to(contain("initialized"))
@@ -90,11 +90,11 @@ class ExCoreDataSpec: QuickSpec {
             
             it("initializing"){
                 // First Time
-                var firstStatus: ExCoreData.Status<NSManagedObjectContext, Error>? = nil
+                var firstStatus: ExCoreDataInitStatus<NSManagedObjectContext, Error>? = nil
                 ExampleCoreData.initInstance { firstStatus = $0 }
                 
                 // Second Time
-                var secondStatus: ExCoreData.Status<NSManagedObjectContext, Error>? = nil
+                var secondStatus: ExCoreDataInitStatus<NSManagedObjectContext, Error>? = nil
                 ExampleCoreData.initInstance { secondStatus = $0 }
                 
                 // Second Timeの結果確認
@@ -135,7 +135,7 @@ class ExCoreDataSpec: QuickSpec {
             }
             
             it("init"){
-                var status: ExCoreData.Status<NSManagedObjectContext, Error>? = nil
+                var status: ExCoreDataInitStatus<NSManagedObjectContext, Error>? = nil
                 ErrorCoreData.initInstance { status = $0 }
                 expect(ErrorCoreData.getContext()).to(beNil())
                 expect(ErrorCoreData.getCoreDataNum()) == 0
@@ -154,7 +154,7 @@ class ExCoreDataSpec: QuickSpec {
            // 先にDBファイルを保存するフォルダーのフォルダーに同じ名前のファイルを作成してエラーが発生するケース
         }
         it("On Other Thread"){
-            var status: ExCoreData.Status<NSManagedObjectContext, Error>? = nil
+            var status: ExCoreDataInitStatus<NSManagedObjectContext, Error>? = nil
             DispatchQueue.global(qos: .userInitiated).async {
                 ExampleCoreData.initInstance{status = $0}
             }
@@ -208,7 +208,7 @@ class ExCoreDataSpec: QuickSpec {
         }
         
         it("Create 2 ExCoreData"){
-            var status: ExCoreData.Status<NSManagedObjectContext, Error>? = nil
+            var status: ExCoreDataInitStatus<NSManagedObjectContext, Error>? = nil
             SecondCoreData.initInstance { status = $0 }
             expect(status).toNotEventually(beNil(), timeout: 5)
             expect("\(status!)").to(contain("success"))
@@ -233,7 +233,7 @@ class ExCoreDataSpec: QuickSpec {
 /// 各テスト共通に利用する目的のメソッド
 extension ExCoreDataSpec{
     private func initDB() -> NSManagedObjectContext{
-        var status: ExCoreData.Status<NSManagedObjectContext, Error>? = nil
+        var status: ExCoreDataInitStatus<NSManagedObjectContext, Error>? = nil
         ExLog.log("#[初期化処理] contextの生成")
         ExampleCoreData.initInstance { status = $0 }
         expect(status).toNotEventually(beNil(), timeout: 5)

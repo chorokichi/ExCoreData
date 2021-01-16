@@ -29,12 +29,6 @@ open class ExCoreData {
     }
     
     public typealias RequiredData = (xcDataModelName: String, packageName: String, storeDataName: String)
-    public enum Status<NSManagedObjectContext, Error> {
-        case initializing
-        case initialized
-        case success(NSManagedObjectContext)
-        case failure(Error)
-    }
     
     ///
     /// 子クラスで必ず実装する必要がある変数
@@ -69,7 +63,7 @@ open class ExCoreData {
     ///
     /// 理由
     /// - 本当はprivateにしたいがinitInstanceメソッドで初期化する際にpublicにしておく必要がある
-    public required init(completionHandler: @escaping (ExCoreData.Status<NSManagedObjectContext, Error>) -> Void) {
+    public required init(completionHandler: @escaping (ExCoreDataInitStatus<NSManagedObjectContext, Error>) -> Void) {
         ExLog.log("\(ExCoreData.LogTag)\"\(self)\"の初期化処理開始...")
         self.createInstance() { (result: ExCoreDataResult<CoreDataStore, Error>) in
             ExLog.log("\(ExCoreData.LogTag)**** callback method")
@@ -86,7 +80,7 @@ open class ExCoreData {
     }
     
     /// initInstanceを複数のスレッドから呼ぶことを許容しない(UIスレッドである必要はない)。
-    public class func initInstance(completionHandler: @escaping (ExCoreData.Status<NSManagedObjectContext, Error>) -> Void) {
+    public class func initInstance(completionHandler: @escaping (ExCoreDataInitStatus<NSManagedObjectContext, Error>) -> Void) {
         if let instance = self.getInstance() {
             ExLog.log("\(ExCoreData.LogTag)すでに\"\(self)\"のインスタンスあり -> 初期化不要")
             if instance.store != nil {
@@ -98,7 +92,7 @@ open class ExCoreData {
             }
         } else {
             ExLog.log("\(ExCoreData.LogTag)まだインスタンスなし -> 初期化実施")
-            let instance = self.init { (status: Status<NSManagedObjectContext, Error>) in
+            let instance = self.init { (status: ExCoreDataInitStatus<NSManagedObjectContext, Error>) in
                 switch status{
                 case .failure(_):
                     for instance in ExCoreData._Instance where self == type(of: instance){
