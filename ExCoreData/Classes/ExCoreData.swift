@@ -187,8 +187,8 @@ open class ExCoreData {
         
         DispatchQueue.global(qos: .userInteractive).async {
             do {
-                let coreDataSet = try CoreDataStore(requiredData: self.data)
-                performDidConfigurationOnMainForcefully(ExCoreDataResult.success(coreDataSet))
+                let store = try CoreDataStore(requiredData: self.data)
+                performDidConfigurationOnMainForcefully(ExCoreDataResult.success(store))
             } catch {
                 performDidConfigurationOnMainForcefully(ExCoreDataResult.failure(error))
             }

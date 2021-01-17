@@ -21,6 +21,7 @@
 		FA57991825A0C64500922695 /* ExmapleCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57991725A0C64500922695 /* ExmapleCoreData.swift */; };
 		FA8A17C125B32E5B00BEF2BB /* ExCoreDataTestUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A17C025B32E5B00BEF2BB /* ExCoreDataTestUtil.swift */; };
 		FA8A17D525B333C400BEF2BB /* ExCoreDataMessureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A17D425B333C400BEF2BB /* ExCoreDataMessureTests.swift */; };
+		FA8A182F25B36D9400BEF2BB /* ExRecordsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A182E25B36D9400BEF2BB /* ExRecordsSpec.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,7 @@
 		FA57991725A0C64500922695 /* ExmapleCoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExmapleCoreData.swift; sourceTree = "<group>"; };
 		FA8A17C025B32E5B00BEF2BB /* ExCoreDataTestUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExCoreDataTestUtil.swift; sourceTree = "<group>"; };
 		FA8A17D425B333C400BEF2BB /* ExCoreDataMessureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExCoreDataMessureTests.swift; sourceTree = "<group>"; };
+		FA8A182E25B36D9400BEF2BB /* ExRecordsSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExRecordsSpec.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +132,7 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				FA8A182E25B36D9400BEF2BB /* ExRecordsSpec.swift */,
 				607FACEB1AFB9204008FA782 /* ExCoreDataSpec.swift */,
 				FA8A17D425B333C400BEF2BB /* ExCoreDataMessureTests.swift */,
 				FA8A17C025B32E5B00BEF2BB /* ExCoreDataTestUtil.swift */,
@@ -400,6 +403,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA8A182F25B36D9400BEF2BB /* ExRecordsSpec.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* ExCoreDataSpec.swift in Sources */,
 				FA8A17D525B333C400BEF2BB /* ExCoreDataMessureTests.swift in Sources */,
 				FA8A17C125B32E5B00BEF2BB /* ExCoreDataTestUtil.swift in Sources */,
