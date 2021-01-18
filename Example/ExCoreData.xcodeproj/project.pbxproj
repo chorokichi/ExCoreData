@@ -16,12 +16,14 @@
 		607FACEC1AFB9204008FA782 /* ExCoreDataSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* ExCoreDataSpec.swift */; };
 		DDF5CCF6090CF55CABD71825 /* Pods_ExCoreData_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF04C8F2244E817919828DD8 /* Pods_ExCoreData_Example.framework */; };
 		FA57990525A0C4E000922695 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FA57990325A0C4E000922695 /* Model.xcdatamodeld */; };
-		FA57991325A0C57500922695 /* SimpleUser+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57991125A0C57500922695 /* SimpleUser+CoreDataClass.swift */; };
 		FA57991425A0C57500922695 /* SimpleUser+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57991225A0C57500922695 /* SimpleUser+CoreDataProperties.swift */; };
 		FA57991825A0C64500922695 /* ExmapleCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57991725A0C64500922695 /* ExmapleCoreData.swift */; };
 		FA8A17C125B32E5B00BEF2BB /* ExCoreDataTestUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A17C025B32E5B00BEF2BB /* ExCoreDataTestUtil.swift */; };
 		FA8A17D525B333C400BEF2BB /* ExCoreDataMessureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A17D425B333C400BEF2BB /* ExCoreDataMessureTests.swift */; };
 		FA8A182F25B36D9400BEF2BB /* ExRecordsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A182E25B36D9400BEF2BB /* ExRecordsSpec.swift */; };
+		FA8A185725B5D9D300BEF2BB /* SimpleUser+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57991125A0C57500922695 /* SimpleUser+CoreDataClass.swift */; };
+		FA8A185A25B5D9D600BEF2BB /* UniqueUser+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A184025B5D71500BEF2BB /* UniqueUser+CoreDataProperties.swift */; };
+		FA8A186125B5D9DA00BEF2BB /* UniqueUser+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A183F25B5D71500BEF2BB /* UniqueUser+CoreDataClass.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +63,8 @@
 		FA8A17C025B32E5B00BEF2BB /* ExCoreDataTestUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExCoreDataTestUtil.swift; sourceTree = "<group>"; };
 		FA8A17D425B333C400BEF2BB /* ExCoreDataMessureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExCoreDataMessureTests.swift; sourceTree = "<group>"; };
 		FA8A182E25B36D9400BEF2BB /* ExRecordsSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExRecordsSpec.swift; sourceTree = "<group>"; };
+		FA8A183F25B5D71500BEF2BB /* UniqueUser+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UniqueUser+CoreDataClass.swift"; sourceTree = "<group>"; };
+		FA8A184025B5D71500BEF2BB /* UniqueUser+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UniqueUser+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,6 +186,8 @@
 		FA57990A25A0C53200922695 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				FA8A183F25B5D71500BEF2BB /* UniqueUser+CoreDataClass.swift */,
+				FA8A184025B5D71500BEF2BB /* UniqueUser+CoreDataProperties.swift */,
 				FA57991125A0C57500922695 /* SimpleUser+CoreDataClass.swift */,
 				FA57991225A0C57500922695 /* SimpleUser+CoreDataProperties.swift */,
 			);
@@ -392,9 +398,11 @@
 			files = (
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
-				FA57991325A0C57500922695 /* SimpleUser+CoreDataClass.swift in Sources */,
 				FA57991825A0C64500922695 /* ExmapleCoreData.swift in Sources */,
+				FA8A186125B5D9DA00BEF2BB /* UniqueUser+CoreDataClass.swift in Sources */,
 				FA57991425A0C57500922695 /* SimpleUser+CoreDataProperties.swift in Sources */,
+				FA8A185725B5D9D300BEF2BB /* SimpleUser+CoreDataClass.swift in Sources */,
+				FA8A185A25B5D9D600BEF2BB /* UniqueUser+CoreDataProperties.swift in Sources */,
 				FA57990525A0C4E000922695 /* Model.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

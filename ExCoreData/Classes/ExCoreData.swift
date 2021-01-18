@@ -135,6 +135,17 @@ open class ExCoreData {
         }
     }
     
+    /// キャッシュとして保存しているInstaneを削除する
+    public static func discardStore(){
+        guard let instance = self.getInstance() else {
+            fatalError()
+        }
+        guard let context = instance.store?.context else {
+            fatalError()
+        }
+        self._Instance.removeAll(where: {$0.store?.context == context})
+    }
+    
     @available(OSX 10.11, *)
     /// このクラスに関係するDBのファイルを削除しInstanceも削除する
     public static func deleteStore(completed: @escaping () -> Void) {
