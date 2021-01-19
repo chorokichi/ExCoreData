@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -24,6 +24,8 @@
 		FA8A185725B5D9D300BEF2BB /* SimpleUser+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57991125A0C57500922695 /* SimpleUser+CoreDataClass.swift */; };
 		FA8A185A25B5D9D600BEF2BB /* UniqueUser+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A184025B5D71500BEF2BB /* UniqueUser+CoreDataProperties.swift */; };
 		FA8A186125B5D9DA00BEF2BB /* UniqueUser+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A183F25B5D71500BEF2BB /* UniqueUser+CoreDataClass.swift */; };
+		FA8A187125B70BFF00BEF2BB /* CwlPosixPreconditionTesting in Frameworks */ = {isa = PBXBuildFile; productRef = FA8A187025B70BFF00BEF2BB /* CwlPosixPreconditionTesting */; };
+		FA8A187325B70BFF00BEF2BB /* CwlPreconditionTesting in Frameworks */ = {isa = PBXBuildFile; productRef = FA8A187225B70BFF00BEF2BB /* CwlPreconditionTesting */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,7 +82,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA8A187125B70BFF00BEF2BB /* CwlPosixPreconditionTesting in Frameworks */,
 				130655CEB0DDBB1D4C605BED /* Pods_ExCoreData_Tests.framework in Frameworks */,
+				FA8A187325B70BFF00BEF2BB /* CwlPreconditionTesting in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,6 +236,10 @@
 				607FACE71AFB9204008FA782 /* PBXTargetDependency */,
 			);
 			name = ExCoreData_Tests;
+			packageProductDependencies = (
+				FA8A187025B70BFF00BEF2BB /* CwlPosixPreconditionTesting */,
+				FA8A187225B70BFF00BEF2BB /* CwlPreconditionTesting */,
+			);
 			productName = Tests;
 			productReference = 607FACE51AFB9204008FA782 /* ExCoreData_Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -267,6 +275,9 @@
 				Base,
 			);
 			mainGroup = 607FACC71AFB9204008FA782;
+			packageReferences = (
+				FA8A186F25B70BFF00BEF2BB /* XCRemoteSwiftPackageReference "CwlPreconditionTesting" */,
+			);
 			productRefGroup = 607FACD11AFB9204008FA782 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -542,7 +553,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -554,7 +566,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ExCoreData/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = jp.ky.excoredata;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -570,7 +585,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ExCoreData/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = jp.ky.excoredata;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -594,7 +612,11 @@
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
@@ -614,7 +636,11 @@
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
@@ -654,6 +680,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		FA8A186F25B70BFF00BEF2BB /* XCRemoteSwiftPackageReference "CwlPreconditionTesting" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mattgallagher/CwlPreconditionTesting.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FA8A187025B70BFF00BEF2BB /* CwlPosixPreconditionTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FA8A186F25B70BFF00BEF2BB /* XCRemoteSwiftPackageReference "CwlPreconditionTesting" */;
+			productName = CwlPosixPreconditionTesting;
+		};
+		FA8A187225B70BFF00BEF2BB /* CwlPreconditionTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FA8A186F25B70BFF00BEF2BB /* XCRemoteSwiftPackageReference "CwlPreconditionTesting" */;
+			productName = CwlPreconditionTesting;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		FA57990325A0C4E000922695 /* Model.xcdatamodeld */ = {

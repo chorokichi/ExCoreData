@@ -11,6 +11,7 @@ import Nimble
 import ExCoreData
 import CoreData
 import ExLog
+import CwlPreconditionTesting
 
 @testable import ExCoreData_Example
 
@@ -38,18 +39,36 @@ class ExRecordsSpec: QuickSpec {
     }
     
     private func testSimpleUser(){
-        it("FailAddDueToForgetSave"){
-            // CoreDataはNSManagedObjectContextに変更内容が保存されるが、Persistenceに保存する処理をしないと
-            let res = SimpleUser.createEmptyEntity(self.ctx, type: SimpleUser.self)
-            expect("\(res.result)") == "New"
-            
-            // cstを破棄する
-            ExampleCoreData.discardStore()
-            
-            // cstの再取得
-            self.ctx = ExCoreDataTestUtil.initDB()
-            
-            expect{(try SimpleUser.fetchRecords(self.ctx, type: SimpleUser.self)).count} == 0
+        context("Fail"){
+            it("DueToForgetSave"){
+                // CoreDataはNSManagedObjectContextに変更内容が保存されるが、Persistenceに保存する処理をしないと
+                let res = SimpleUser.createEmptyEntity(self.ctx, type: SimpleUser.self)
+                expect("\(res.result)") == "New"
+                
+                // cstを破棄する
+                ExampleCoreData.discardStore()
+                
+                // cstの再取得
+                self.ctx = ExCoreDataTestUtil.initDB()
+                
+                expect{(try SimpleUser.fetchRecords(self.ctx, type: SimpleUser.self)).count} == 0
+            }
+            it("Use not difined PrimaryAttribute"){
+                var reachedPoint1 = false
+                var reachedPoint2 = false
+                var reachedPoint3 = false
+                expect {
+                    reachedPoint1 = true
+                    _ = SimpleUser.createEmptyEntity(self.ctx, valueOfPrimaryAttribute: "a", type: SimpleUser.self)
+                    reachedPoint2 = true
+                    precondition(false, "condition message")
+                    reachedPoint3 = true
+                }.to(throwAssertion())
+
+                expect(reachedPoint1) == true
+                expect(reachedPoint2) == false
+                expect(reachedPoint3) == false
+            }
         }
         
         it("Add"){
@@ -175,9 +194,22 @@ class ExRecordsSpec: QuickSpec {
             expect(records[0].uniqueId) == "TestId"
         }
         
-        //it("FailToAddDueToMissingPrimaryId"){
-            //expect{UniqueUser.createEmptyEntity(self.ctx, type: UniqueUser.self)}.to(throwAssertion())
-        //}
+        it("FailToAddDueToMissingPrimaryId"){
+            var reachedPoint1 = false
+            var reachedPoint2 = false
+            var reachedPoint3 = false
+            expect {
+                reachedPoint1 = true
+                _ = UniqueUser.createEmptyEntity(self.ctx, type: UniqueUser.self)
+                reachedPoint2 = true
+                precondition(false, "condition message")
+                reachedPoint3 = true
+            }.to(throwAssertion())
+
+            expect(reachedPoint1) == true
+            expect(reachedPoint2) == false
+            expect(reachedPoint3) == false
+        }
         
         context("10Users"){
             beforeEach {

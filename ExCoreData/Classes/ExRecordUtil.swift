@@ -26,7 +26,7 @@ public struct ExRecordUtil {
                 try context.save()
             } catch {
                 let nserror = error as NSError
-                NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
+                ExLog.error("Unresolved error \(nserror), \(nserror.userInfo)")
                 throw nserror
             }
             return true
