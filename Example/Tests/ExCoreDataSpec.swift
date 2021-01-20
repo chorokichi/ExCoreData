@@ -82,13 +82,13 @@ class ExCoreDataSpec: QuickSpec {
                 // First Time
                 var firstStatus: ExCoreDataInitStatus<NSManagedObjectContext, Error>? = nil
                 ExampleCoreData.initInstance { firstStatus = $0 }
-                expect(firstStatus).toNotEventually(beNil(), timeout: 5)
+                expect(firstStatus).toNotEventually(beNil(), timeout: .seconds(5))
                 expect("\(firstStatus!)").to(contain("success"))
                 
                 // Second Time
                 var secondStatus: ExCoreDataInitStatus<NSManagedObjectContext, Error>? = nil
                 ExampleCoreData.initInstance { secondStatus = $0 }
-                expect(secondStatus).toNotEventually(beNil(), timeout: 5)
+                expect(secondStatus).toNotEventually(beNil(), timeout: .seconds(5))
                 expect("\(secondStatus!)").to(contain("initialized"))
             }
             
@@ -102,11 +102,11 @@ class ExCoreDataSpec: QuickSpec {
                 ExampleCoreData.initInstance { secondStatus = $0 }
                 
                 // Second Timeの結果確認
-                expect(secondStatus).toNotEventually(beNil(), timeout: 5)
+                expect(secondStatus).toNotEventually(beNil(), timeout: .seconds(5))
                 expect("\(secondStatus!)").to(contain("initializing"))
                 
                 // First Timeの結果確認
-                expect(firstStatus).toNotEventually(beNil(), timeout: 5)
+                expect(firstStatus).toNotEventually(beNil(), timeout: .seconds(5))
                 expect("\(firstStatus!)").to(contain("success"))
             }
         }
@@ -143,7 +143,7 @@ class ExCoreDataSpec: QuickSpec {
                 ErrorCoreData.initInstance { status = $0 }
                 expect(ErrorCoreData.getContext()).to(beNil())
                 expect(ErrorCoreData.getCoreDataNum()) == 0
-                expect(status).toNotEventually(beNil(), timeout: 5)
+                expect(status).toNotEventually(beNil(), timeout: .seconds(5))
                 switch status{
                 case .failure(let error):
                     expect(error.localizedDescription) == "Failed to initialize the application's saved data"
@@ -162,7 +162,7 @@ class ExCoreDataSpec: QuickSpec {
             DispatchQueue.global(qos: .userInitiated).async {
                 ExampleCoreData.initInstance{status = $0}
             }
-            expect(status).toNotEventually(beNil(), timeout:5)
+            expect(status).toNotEventually(beNil(), timeout: .seconds(5))
             expect("\(status!)").to(contain("success"))
         }
     }
@@ -185,7 +185,7 @@ class ExCoreDataSpec: QuickSpec {
             ExampleCoreData.deleteStore {
                 processing = false
             }
-            expect(processing).toEventually(beFalse(), timeout: 5)
+            expect(processing).toEventually(beFalse(), timeout: .seconds(5))
             expect(ExampleCoreData.getContext()).to(beNil())
             expect(ExampleCoreData.getCoreDataNum()) == 0
             
@@ -214,7 +214,7 @@ class ExCoreDataSpec: QuickSpec {
         it("Create 2 ExCoreData"){
             var status: ExCoreDataInitStatus<NSManagedObjectContext, Error>? = nil
             SecondCoreData.initInstance { status = $0 }
-            expect(status).toNotEventually(beNil(), timeout: 5)
+            expect(status).toNotEventually(beNil(), timeout: .seconds(5))
             expect("\(status!)").to(contain("success"))
             expect(SecondCoreData.getContext()).notTo(beNil())
             expect(SecondCoreData.getCoreDataNum()) == 2
@@ -225,7 +225,7 @@ class ExCoreDataSpec: QuickSpec {
             SecondCoreData.deleteStore {
                 deleted = true
             }
-            expect(deleted).toEventually(beTrue(), timeout: 5)
+            expect(deleted).toEventually(beTrue(), timeout: .seconds(5))
             expect(SecondCoreData.getContext()).to(beNil())
             expect(SecondCoreData.getCoreDataNum()) == 1
             expect(ExampleCoreData.getContext()).notTo(beNil())
@@ -255,9 +255,9 @@ class ExCoreDataSpec: QuickSpec {
                 ExampleCoreData.initInstance { status3 = $0 }
             }
             
-            expect(status1).toNotEventually(beNil(), timeout: 5)
-            expect(status2).toNotEventually(beNil(), timeout: 5)
-            expect(status3).toNotEventually(beNil(), timeout: 5)
+            expect(status1).toNotEventually(beNil(), timeout: .seconds(5))
+            expect(status2).toNotEventually(beNil(), timeout: .seconds(5))
+            expect(status3).toNotEventually(beNil(), timeout: .seconds(5))
             
             ExLog.log(status1)
             ExLog.log(status2)
@@ -282,9 +282,9 @@ class ExCoreDataSpec: QuickSpec {
                 ExampleCoreData.initInstance { status3 = $0 }
             }
             
-            expect(status1).toNotEventually(beNil(), timeout: 5)
-            expect(status2).toNotEventually(beNil(), timeout: 5)
-            expect(status3).toNotEventually(beNil(), timeout: 5)
+            expect(status1).toNotEventually(beNil(), timeout: .seconds(5))
+            expect(status2).toNotEventually(beNil(), timeout: .seconds(5))
+            expect(status3).toNotEventually(beNil(), timeout: .seconds(5))
             
             ExLog.log(status1)
             ExLog.log(status2)

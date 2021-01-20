@@ -19,7 +19,7 @@ struct ExCoreDataTestUtil {
             var status: ExCoreDataInitStatus<NSManagedObjectContext, Error>? = nil
             ExLog.log("#[初期化処理] contextの生成")
             ExampleCoreData.initInstance { status = $0 }
-            expect(status).toNotEventually(beNil(), timeout: 5)
+        expect(status).toNotEventually(beNil(), timeout: .seconds(5))
             
             let coreDataContext:NSManagedObjectContext?
             switch status{
@@ -42,6 +42,6 @@ struct ExCoreDataTestUtil {
         Core.deleteStore {
             result = true
         }
-        expect(result).toEventually(beTrue(), timeout: 10)
+        expect(result).toEventually(beTrue(), timeout: .seconds(10))
     }
 }

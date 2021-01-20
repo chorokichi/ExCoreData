@@ -30,9 +30,9 @@ public struct ExRecordUtil {
                 throw nserror
             }
             return true
-        } else {
-            ExLog.log("Context does not have any changes")
-            return false
         }
+         
+        ExLog.log("Context does not have any changes")
+        return false
     }
 }
