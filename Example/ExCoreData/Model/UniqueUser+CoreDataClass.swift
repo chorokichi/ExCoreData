@@ -12,10 +12,6 @@ import CoreData
 import ExCoreData
 
 public class UniqueUser: ExRecords {
-    class public override var EntityName: String {
-        return "UniqueUser"
-    }
-    
     /// 主キーとしている属性名
     public class override var PrimaryAttribute: String? {
         return "uniqueId"

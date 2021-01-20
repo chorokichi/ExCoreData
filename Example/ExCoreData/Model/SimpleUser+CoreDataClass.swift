@@ -13,7 +13,4 @@ import ExCoreData
 
 @objc(User)
 public class SimpleUser: ExRecords {
-    class public override var EntityName: String {
-        return "SimpleUser"
-    }
 }

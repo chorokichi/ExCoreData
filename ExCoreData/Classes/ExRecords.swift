@@ -15,10 +15,21 @@ import ExLog
 /// 1. PrimaryAttribute: fetchOneRecordで主キーでの一件だけの検索が可能。createEmptyEntityでvalueOfPrimaryAttributeに主キーの値をセットすれば、既存データの場合は新規作成ではなく、その既存データを取得し返す。
 /// 2. MandatoryAttributes
 open class ExRecords: NSManagedObject {
-    public enum Result {
-        case New
-        case Updated
-        case Fail(String)
+    public enum Result<T: ExRecords> {
+        case new(T)
+        case updated(T)
+        case fail(String)
+        
+        public func getRecord() -> T?{
+            switch self {
+            case .new(let record):
+                return record
+            case .updated(let record):
+                return record
+            case .fail(_):
+                return nil
+            }
+        }
     }
     
     // MARK: - [クラス・スタティック変数・関数] -
@@ -33,31 +44,31 @@ open class ExRecords: NSManagedObject {
         return []
     }
     
-    open class var EntityName: String {
-        ExLog.error("Not Defined in Sub class")
-        fatalError("Not Defined in Sub class")
+    private class var EntityName: String {
+        // selfは子クラスが呼んだ場合はそのクラス名となる
+        "\(self)"
     }
-    
+        
     /// 空のエンティティを作成する[永続保存されない]
     /// 注意：
     /// ・主キーで一致するデータがある場合は、そのデータを返す
     /// ・主キーで一致するデータがない場合は、新規にデータを作成して主キーの値のみ設定する
-    public static func createEmptyEntity<T: ExRecords>(_ context: NSManagedObjectContext, valueOfPrimaryAttribute value: String? = nil, type: T.Type) -> (result: ExRecords.Result, record: T) {
-        
+    public static func createEmptyEntity<T: ExRecords>(_ context: NSManagedObjectContext, valueOfPrimaryAttribute value: String? = nil, type: T.Type) -> ExRecords.Result<T> {
         // 主キーで一致するデータがある場合は、そのデータを返す
+        
         if let value = value {
             guard let AttrName = T.PrimaryAttribute else {
                 fatalError("主キーの設定が子クラスでされていないにもかからず主キーの値(\(value))で検索しようとしている。")
             }
             
             if let record: T = T.fetchOneRecord(context, valueOfPrimaryAttribute: value, type: type) {
-                return (.Updated, record)
+                return .updated(record)
             } else {
                 guard let record: T = NSEntityDescription.insertNewObject(forEntityName: T.EntityName, into: context) as? T else {
                     fatalError("record should not be nil.")
                 }
                 record.setValue(value, forKey: AttrName)
-                return (.New, record)
+                return .new(record)
             }
         } else {
             if let AttrName = T.PrimaryAttribute {
@@ -68,7 +79,7 @@ open class ExRecords: NSManagedObject {
         guard let record: T = NSEntityDescription.insertNewObject(forEntityName: T.EntityName, into: context) as? T else {
             fatalError("record should not be nil.")
         }
-        return (.New, record)
+        return .new(record)
     }
     
     @nonobjc open class func fetchRequest<T: ExRecords>() -> NSFetchRequest<T> {

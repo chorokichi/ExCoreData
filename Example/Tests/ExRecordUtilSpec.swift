@@ -46,7 +46,7 @@ class ExRecordUtilSpec: QuickSpec {
                 
                 it("invalid age"){
                     let res = StrictUser.createEmptyEntity(coreDataContext!, type: StrictUser.self)
-                    res.record.age = -1
+                    res.getRecord()?.age = -1
                     expect {try ExRecordUtil.saveContext(coreDataContext)}.to(throwError())
                     expect(ExLog.history).to(contain("Unresolved error Error"))
                 }

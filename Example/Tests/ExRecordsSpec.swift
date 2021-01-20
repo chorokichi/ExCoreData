@@ -43,7 +43,7 @@ class ExRecordsSpec: QuickSpec {
             it("DueToForgetSave"){
                 // CoreDataはNSManagedObjectContextに変更内容が保存されるが、Persistenceに保存する処理をしないと
                 let res = SimpleUser.createEmptyEntity(self.ctx, type: SimpleUser.self)
-                expect("\(res.result)") == "New"
+                expect("\(res)").to(contain("new(<"))
                 
                 // cstを破棄する
                 ExampleCoreData.discardStore()
@@ -73,12 +73,13 @@ class ExRecordsSpec: QuickSpec {
         
         it("Add"){
             let res = SimpleUser.createEmptyEntity(self.ctx, type: SimpleUser.self)
-            expect("\(res.result)") == "New"
-            res.record.name = "TestName"
-            res.record.age = 33
-            res.record.id = "TestId"
+            expect("\(res)").to(contain("new(<"))
+            let record = res.getRecord()!
+            record.name = "TestName"
+            record.age = 33
+            record.id = "TestId"
             
-            expect{try res.record.save()} == true
+            expect{try record.save()} == true
             
             ExampleCoreData.discardStore()
             
@@ -99,7 +100,7 @@ class ExRecordsSpec: QuickSpec {
         it("Add 10"){
             for _ in 0 ..< 10{
                 let res = SimpleUser.createEmptyEntity(self.ctx, type: SimpleUser.self)
-                expect("\(res.result)") == "New"
+                expect("\(res)").to(contain("new(<"))
             }
             expect{ (try SimpleUser.fetchRecords(self.ctx, type: SimpleUser.self)).count} == 10
         }
@@ -108,10 +109,10 @@ class ExRecordsSpec: QuickSpec {
             let res1 = SimpleUser.createEmptyEntity(self.ctx, type: SimpleUser.self)
             _ = SimpleUser.createEmptyEntity(self.ctx, type: SimpleUser.self)
             expect{ (try SimpleUser.fetchRecords(self.ctx, type: SimpleUser.self)).count} == 2
-            expect{try res1.record.save()} == true
+            expect{try res1.getRecord()?.save()} == true
             expect{ (try SimpleUser.fetchRecords(self.ctx, type: SimpleUser.self)).count} == 2
-            res1.record.delete()
-            expect{try res1.record.save()} == true
+            res1.getRecord()?.delete()
+            expect{try res1.getRecord()?.save()} == true
             expect{ (try SimpleUser.fetchRecords(self.ctx, type: SimpleUser.self)).count} == 1
         }
         
@@ -171,12 +172,13 @@ class ExRecordsSpec: QuickSpec {
     private func testUniqueUser(){
         it("Add"){
             let res = UniqueUser.createEmptyEntity(self.ctx, valueOfPrimaryAttribute: "TestId", type: UniqueUser.self)
-            expect("\(res.result)") == "New"
-            res.record.name = "TestName"
-            res.record.age = 33
-            expect(res.record.uniqueId) == "TestId"
+            expect("\(res)").to(contain("new(<"))
+            let record = res.getRecord()!
+            record.name = "TestName"
+            record.age = 33
+            expect(record.uniqueId) == "TestId"
             
-            expect{try res.record.save()} == true
+            expect{try record.save()} == true
             
             ExampleCoreData.discardStore()
             
@@ -220,9 +222,10 @@ class ExRecordsSpec: QuickSpec {
             it("Update"){
                 expect{ (try UniqueUser.fetchRecords(self.ctx, type: UniqueUser.self)).count} == 10
                 let res = UniqueUser.createEmptyEntity(self.ctx, valueOfPrimaryAttribute: "Id1", type: UniqueUser.self)
-                expect("\(res.result)") == "Updated"
-                expect(res.record.name) == "User1"
-                expect(res.record.age) == 1
+                expect("\(res)").to(contain("updated(<"))
+                let record = res.getRecord()!
+                expect(record.name) == "User1"
+                expect(record.age) == 1
                 expect{ (try UniqueUser.fetchRecords(self.ctx, type: UniqueUser.self)).count} == 10
             }
             
@@ -245,14 +248,16 @@ class ExRecordsSpec: QuickSpec {
     
     private func createSimpleUser(_ id: String, _ name:String, _ age:Int){
         let res = SimpleUser.createEmptyEntity(self.ctx, type: SimpleUser.self)
-        res.record.id = id
-        res.record.name = name
-        res.record.age = Int32(age)
+        let record = res.getRecord()!
+        record.id = id
+        record.name = name
+        record.age = Int32(age)
     }
     
     private func createUniqueUser(_ id: String, _ name:String, _ age:Int){
         let res = UniqueUser.createEmptyEntity(self.ctx, valueOfPrimaryAttribute: id, type: UniqueUser.self)
-        res.record.name = name
-        res.record.age = Int32(age)
+        let record = res.getRecord()!
+        record.name = name
+        record.age = Int32(age)
     }
 }
