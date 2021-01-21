@@ -9,8 +9,13 @@
 import CoreData
 import ExLog
 
-/// カスタムNSManagedObject。このクラスを継承させて使うと便利。
-/// EntityNameをオーバーライドしたクラスを定義すれば、フェッチや作成(空)、削除の静的メソッドが利用可能。
+/// カスタムNSManagedObject。
+/// フェッチや作成(空)、削除の静的メソッドが利用可能。
+///
+/// 利用する上で制約
+/// - このクラスを直接使用せずに、このクラスを継承したクラスを利用すること
+/// - 子クラス名とEntity名は必ず同じにしないと動作しない。
+///
 /// 他にも次の二つのコンピュート変数を子クラスでオーバーライドすれば次のような使い方ができる
 /// 1. PrimaryAttribute: fetchOneRecordで主キーでの一件だけの検索が可能。createEmptyEntityでvalueOfPrimaryAttributeに主キーの値をセットすれば、既存データの場合は新規作成ではなく、その既存データを取得し返す。
 /// 2. MandatoryAttributes
