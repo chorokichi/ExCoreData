@@ -5,6 +5,7 @@ import Nimble
 import ExCoreData
 import CoreData
 import ExLog
+import CwlPreconditionTesting
 
 @testable import ExCoreData_Example
 
@@ -158,12 +159,14 @@ class ExCoreDataSpec: QuickSpec {
            // 先にDBファイルを保存するフォルダーのフォルダーに同じ名前のファイルを作成してエラーが発生するケース
         }
         it("On Other Thread"){
-            var status: ExCoreDataInitStatus<NSManagedObjectContext, Error>? = nil
+            var isFinished = false
             DispatchQueue.global(qos: .userInitiated).async {
-                ExampleCoreData.initInstance{status = $0}
+                expect{ExampleCoreData.initInstance { (_) in
+                    fail()
+                }}.to(throwAssertion())
+                isFinished = true
             }
-            expect(status).toNotEventually(beNil(), timeout: .seconds(5))
-            expect("\(status!)").to(contain("success"))
+            expect(isFinished).toNotEventually(beTrue(), timeout: .seconds(5))
         }
     }
     
@@ -238,19 +241,19 @@ class ExCoreDataSpec: QuickSpec {
             ExCoreDataTestUtil.cleanDB(ExampleCoreData.self)
         }
         
-        it("ParallelOnManyThread"){
+        it("ParallelOnManyMainThread"){
             var status1: ExCoreDataInitStatus<NSManagedObjectContext, Error>? = nil
             var status2: ExCoreDataInitStatus<NSManagedObjectContext, Error>? = nil
             var status3: ExCoreDataInitStatus<NSManagedObjectContext, Error>? = nil
-            DispatchQueue.global(qos: .userInteractive).async {
+            DispatchQueue.main.async {
                 ExLog.log(Thread.current)
                 ExampleCoreData.initInstance { status1 = $0 }
             }
-            DispatchQueue.global(qos: .userInteractive).async {
+            DispatchQueue.main.async {
                 ExLog.log(Thread.current)
                 ExampleCoreData.initInstance { status2 = $0 }
             }
-            DispatchQueue.global(qos: .userInitiated).async {
+            DispatchQueue.main.async {
                 ExLog.log(Thread.current)
                 ExampleCoreData.initInstance { status3 = $0 }
             }

@@ -27,21 +27,21 @@ class ExCoreDataMessureTests: XCTestCase {
             var status1: ExCoreDataInitStatus<NSManagedObjectContext, Error>? = nil
             var status2: ExCoreDataInitStatus<NSManagedObjectContext, Error>? = nil
             var status3: ExCoreDataInitStatus<NSManagedObjectContext, Error>? = nil
-            DispatchQueue.global(qos: .userInteractive).async {
+            DispatchQueue.main.async {
                 ExLog.log(Thread.current)
                 ExampleCoreData.initInstance { status in
                     status1 = status
                     exp.fulfill()
                 }
             }
-            DispatchQueue.global(qos: .userInteractive).async {
+            DispatchQueue.main.async {
                 ExLog.log(Thread.current)
                 ExampleCoreData.initInstance { status in
                     status2 = status
                     exp.fulfill()
                 }
             }
-            DispatchQueue.global(qos: .userInitiated).async {
+            DispatchQueue.main.async {
                 ExLog.log(Thread.current)
                 ExampleCoreData.initInstance { status in
                     status3 = status

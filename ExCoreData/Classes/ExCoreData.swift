@@ -87,6 +87,11 @@ open class ExCoreData {
     
     /// initInstanceを複数のスレッドから呼ぶことを許容しない(UIスレッドである必要はない)。
     public static func initInstance(completionHandler: @escaping (ExCoreDataInitStatus<NSManagedObjectContext, Error>) -> Void) {
+        guard Thread.isMainThread else{
+            ExLog.fatalError("このメソッドは必ずメインスレッド上で実行する必要がある。")
+            return completionHandler(.failure(NSError(domain: "ExCoreDataInitError", code: 1, userInfo: ["Description": "このメソッドは必ずメインスレッド上で実行する必要がある。"])))
+        }
+        
         defer { sem.signal() }
         sem.wait()
         if let instance = self.getInstance() {
@@ -127,6 +132,11 @@ open class ExCoreData {
     /// コンテキストを返すメソッド
     /// 注意：先にinitInstanceでcontextを初期化していないと正常な値が返ってこない。このメソッドは確実にcontextが初期化されている場合のみ利用できる
     public static func getContext() -> NSManagedObjectContext? {
+        guard Thread.isMainThread else{
+            ExLog.fatalError("このメソッドは必ずメインスレッド上で実行する必要がある。")
+            return nil
+        }
+        
         if let instance = self.getInstance(), let context = instance.store?.context {
             return context
         } else {
@@ -149,6 +159,11 @@ open class ExCoreData {
     @available(OSX 10.11, *)
     /// このクラスに関係するDBのファイルを削除しInstanceも削除する
     public static func deleteStore(completed: @escaping () -> Void) {
+        guard Thread.isMainThread else{
+            ExLog.fatalError("このメソッドは必ずメインスレッド上で実行する必要がある。")
+            return
+        }
+        
         guard let instance = self.getInstance() else {
             fatalError()
         }
@@ -165,6 +180,11 @@ open class ExCoreData {
     
     /// DBのファイルを削除する
     private func deleteStore() -> Bool{
+        guard Thread.isMainThread else{
+            ExLog.fatalError("このメソッドは必ずメインスレッド上で実行する必要がある。")
+            return false
+        }
+        
         guard let store = self.store else{
             fatalError()
         }
