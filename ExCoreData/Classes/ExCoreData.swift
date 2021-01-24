@@ -89,7 +89,10 @@ open class ExCoreData {
     public static func initInstance(completionHandler: @escaping (ExCoreDataInitStatus<NSManagedObjectContext, Error>) -> Void) {
         guard Thread.isMainThread else{
             ExLog.fatalError("このメソッドは必ずメインスレッド上で実行する必要がある。")
-            return completionHandler(.failure(NSError(domain: "ExCoreDataInitError", code: 1, userInfo: ["Description": "このメソッドは必ずメインスレッド上で実行する必要がある。"])))
+            DispatchQueue.main.async {
+                completionHandler(.failure(NSError(domain: "ExCoreDataInitError", code: 1, userInfo: ["Description": "このメソッドは必ずメインスレッド上で実行する必要がある。"])))
+            }
+            return
         }
         
         defer { sem.signal() }
