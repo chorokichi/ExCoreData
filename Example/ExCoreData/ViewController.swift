@@ -16,6 +16,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var loadingStachView: UIStackView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        if ExLog.isTesting(){
+            return
+        }
         self.startLoad()
 //        ExampleCoreData.initInstance { (context: NSManagedObjectContext?) in
 //            ExLog.log()

@@ -28,7 +28,7 @@ open class ExCoreData {
         ExLog.log("\(ExCoreData.LogTag) deinit...")
     }
     
-    public typealias RequiredData = (xcDataModelName: String, packageName: String, storeDataName: String)
+    public typealias RequiredData = (xcDataModelName: String, packageName: String, storeDataName: String, bundle: Bundle)
     
     ///
     /// 子クラスで必ず実装する必要がある変数
@@ -273,7 +273,7 @@ private class CoreDataStore {
             
             self.context = {
                 let managedObjectModel: NSManagedObjectModel = {
-                    let modelURL = Bundle.main.url(forResource: requiredData.xcDataModelName, withExtension: "momd")!
+                    let modelURL = requiredData.bundle.url(forResource: requiredData.xcDataModelName, withExtension: "momd")!
                     return NSManagedObjectModel(contentsOf: modelURL)!
                 }()
                 

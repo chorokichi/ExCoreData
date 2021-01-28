@@ -22,6 +22,7 @@ class ExCoreDataMessureTests: XCTestCase {
         var count = 1
         self.measure {
             ExLog.important("\(String(format: "%2d回目...", count))")
+            XCTAssertNil(ExampleCoreData.getContext())
             let exp = self.expectation(description: "Performance")
             exp.expectedFulfillmentCount = 3
             var status1: ExCoreDataInitStatus<NSManagedObjectContext, Error>? = nil

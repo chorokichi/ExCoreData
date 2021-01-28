@@ -22,10 +22,10 @@ class ExRecordsSpec: QuickSpec {
         describe("ExRecordsSpec") {
             
             beforeEach {
-                self.ctx = ExCoreDataTestUtil.initDB()
+                self.ctx = ExCoreDataTestUtil<ExampleCoreData>.initDB()
             }
             afterEach {
-                ExCoreDataTestUtil.cleanDB(ExampleCoreData.self)
+                ExCoreDataTestUtil<ExampleCoreData>.cleanDB()
             }
             
             context("SimpleUser"){
@@ -49,7 +49,7 @@ class ExRecordsSpec: QuickSpec {
                 ExampleCoreData.discardStore()
                 
                 // cstの再取得
-                self.ctx = ExCoreDataTestUtil.initDB()
+                self.ctx = ExCoreDataTestUtil<ExampleCoreData>.initDB()
                 
                 expect{(try SimpleUser.fetchRecords(self.ctx, type: SimpleUser.self)).count} == 0
             }
@@ -84,7 +84,7 @@ class ExRecordsSpec: QuickSpec {
             ExampleCoreData.discardStore()
             
             //  取り直し
-            self.ctx = ExCoreDataTestUtil.initDB()
+            self.ctx = ExCoreDataTestUtil<ExampleCoreData>.initDB()
             
             var records:[SimpleUser] = []
             expect{
@@ -183,7 +183,7 @@ class ExRecordsSpec: QuickSpec {
             ExampleCoreData.discardStore()
             
             //  取り直し
-            self.ctx = ExCoreDataTestUtil.initDB()
+            self.ctx = ExCoreDataTestUtil<ExampleCoreData>.initDB()
             
             var records:[UniqueUser] = []
             expect{

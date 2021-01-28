@@ -29,6 +29,7 @@
 		FA8A187725B85E4600BEF2BB /* ExRecordUtilSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A187625B85E4600BEF2BB /* ExRecordUtilSpec.swift */; };
 		FA8A188025B860F400BEF2BB /* StrictUser+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A187E25B860F400BEF2BB /* StrictUser+CoreDataClass.swift */; };
 		FA8A188125B860F400BEF2BB /* StrictUser+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A187F25B860F400BEF2BB /* StrictUser+CoreDataProperties.swift */; };
+		FAC0D80225BD8E9500303872 /* ExConfigSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC0D7FC25BD8E6C00303872 /* ExConfigSpec.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,7 @@
 		FA8A187625B85E4600BEF2BB /* ExRecordUtilSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExRecordUtilSpec.swift; sourceTree = "<group>"; };
 		FA8A187E25B860F400BEF2BB /* StrictUser+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StrictUser+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FA8A187F25B860F400BEF2BB /* StrictUser+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StrictUser+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		FAC0D7FC25BD8E6C00303872 /* ExConfigSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExConfigSpec.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +148,7 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				FAC0D7FB25BD8E5F00303872 /* Config */,
 				FA8A182E25B36D9400BEF2BB /* ExRecordsSpec.swift */,
 				607FACEB1AFB9204008FA782 /* ExCoreDataSpec.swift */,
 				FA8A187625B85E4600BEF2BB /* ExRecordUtilSpec.swift */,
@@ -205,6 +208,14 @@
 				FA57991225A0C57500922695 /* SimpleUser+CoreDataProperties.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		FAC0D7FB25BD8E5F00303872 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				FAC0D7FC25BD8E6C00303872 /* ExConfigSpec.swift */,
+			);
+			name = Config;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -436,6 +447,7 @@
 				FA8A182F25B36D9400BEF2BB /* ExRecordsSpec.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* ExCoreDataSpec.swift in Sources */,
 				FA8A187725B85E4600BEF2BB /* ExRecordUtilSpec.swift in Sources */,
+				FAC0D80225BD8E9500303872 /* ExConfigSpec.swift in Sources */,
 				FA8A17D525B333C400BEF2BB /* ExCoreDataMessureTests.swift in Sources */,
 				FA8A17C125B32E5B00BEF2BB /* ExCoreDataTestUtil.swift in Sources */,
 			);
@@ -576,12 +588,14 @@
 			baseConfigurationReference = 2F5CB98C8531A472448F787A /* Pods-ExCoreData_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CURRENT_PROJECT_VERSION = 2;
 				INFOPLIST_FILE = ExCoreData/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.2;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = jp.ky.excoredata;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -595,12 +609,14 @@
 			baseConfigurationReference = 108EC89D1DB1E14DF1B0D69D /* Pods-ExCoreData_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CURRENT_PROJECT_VERSION = 2;
 				INFOPLIST_FILE = ExCoreData/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.2;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = jp.ky.excoredata;
 				PRODUCT_NAME = "$(TARGET_NAME)";

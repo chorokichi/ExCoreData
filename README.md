@@ -20,6 +20,7 @@
       - [ExRecords を継承したクラスの生成方法](#exrecords-を継承したクラスの生成方法)
       - [ExRecords を継承したクラスでできること](#exrecords-を継承したクラスでできること)
   - [注意事項](#注意事項)
+  - [履歴](#履歴)
   - [Author](#author)
   - [License](#license)
 
@@ -141,6 +142,10 @@ ExRecords のメソッドの Docs 参照。
 - {ExCoreData を継承したクラス}#initInstance で初期化された Context は静的変数として保存されるため、メモリを圧迫する点に注意。もちろん、ひとつかふたつなら特に問題なし。
 
 - 本来 CoreData は SQLite 以外のストアタイプもサポートしているが、このライブラリでは　 SQLite のみサポートしている。変更したい場合は、CoreDataStore＃addPerssistentStored を直接編集する必要あり。
+
+## 履歴
+
+[参照](./Versions.md)
 
 ## Author
 

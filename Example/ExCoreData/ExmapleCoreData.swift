@@ -14,7 +14,8 @@ class ExampleCoreData: ExCoreData{
         let data = ExCoreData.RequiredData(
             "Model",
             "jp.ky.excoredata",
-            "Example")
+            "Example",
+            Bundle.main)
         return data
     }
 }

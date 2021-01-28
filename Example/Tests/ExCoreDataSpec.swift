@@ -41,12 +41,12 @@ class ExCoreDataSpec: QuickSpec {
     private func normal(){
         var coreDataContext:NSManagedObjectContext? = nil
         beforeEach {
-            coreDataContext = ExCoreDataTestUtil.initDB()
+            coreDataContext = ExCoreDataTestUtil<ExampleCoreData>.initDB()
         }
         
         afterEach {
             ExLog.log("# AfterEach")
-            ExCoreDataTestUtil.cleanDB(ExampleCoreData.self)
+            ExCoreDataTestUtil<ExampleCoreData>.cleanDB()
         }
         
         it("Static Variable"){
@@ -75,7 +75,7 @@ class ExCoreDataSpec: QuickSpec {
     private func initializeProcess(){
         afterEach {
             ExLog.log("# AfterEach")
-            ExCoreDataTestUtil.cleanDB(ExampleCoreData.self)
+            ExCoreDataTestUtil<ExampleCoreData>.cleanDB()
         }
         
         context("Status"){
@@ -119,7 +119,8 @@ class ExCoreDataSpec: QuickSpec {
                     let data = ExCoreData.RequiredData(
                         "Model",
                         ErrorCoreData.packageName,
-                        "Error")
+                        "Error",
+                        Bundle.main)
                     return data
                 }
             }
@@ -163,8 +164,8 @@ class ExCoreDataSpec: QuickSpec {
             DispatchQueue.global(qos: .userInitiated).async {
                 expect{ExampleCoreData.initInstance { (_) in
                     fail()
+                    isFinished = true
                 }}.to(throwAssertion())
-                isFinished = true
             }
             expect(isFinished).toNotEventually(beTrue(), timeout: .seconds(5))
         }
@@ -172,12 +173,12 @@ class ExCoreDataSpec: QuickSpec {
     
     private func delete(){
         beforeEach {
-            _ = ExCoreDataTestUtil.initDB()
+            _ = ExCoreDataTestUtil<ExampleCoreData>.initDB()
         }
         
         afterEach {
             ExLog.log("# AfterEach")
-            ExCoreDataTestUtil.cleanDB(ExampleCoreData.self)
+            ExCoreDataTestUtil<ExampleCoreData>.cleanDB()
         }
         
         it("success"){
@@ -201,17 +202,18 @@ class ExCoreDataSpec: QuickSpec {
                 let data = ExCoreData.RequiredData(
                     "Model",
                     "jp.ky.excoredata",
-                    "ExampleSecond")
+                    "ExampleSecond",
+                    Bundle.main)
                 return data
             }
         }
         
         beforeEach{
-            _ = ExCoreDataTestUtil.initDB()
+            _ = ExCoreDataTestUtil<ExampleCoreData>.initDB()
         }
         afterEach{
-            ExCoreDataTestUtil.cleanDB(ExampleCoreData.self)
-            ExCoreDataTestUtil.cleanDB(SecondCoreData.self)
+            ExCoreDataTestUtil<ExampleCoreData>.cleanDB()
+            ExCoreDataTestUtil<SecondCoreData>.cleanDB()
         }
         
         it("Create 2 ExCoreData"){
@@ -238,7 +240,7 @@ class ExCoreDataSpec: QuickSpec {
     
     private func stressTest(){
         afterEach{
-            ExCoreDataTestUtil.cleanDB(ExampleCoreData.self)
+            ExCoreDataTestUtil<ExampleCoreData>.cleanDB()
         }
         
         it("ParallelOnManyMainThread"){

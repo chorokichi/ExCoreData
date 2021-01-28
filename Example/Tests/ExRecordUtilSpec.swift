@@ -20,12 +20,12 @@ class ExRecordUtilSpec: QuickSpec {
         describe("ExRecordUtilSpec") {
             var coreDataContext:NSManagedObjectContext? = nil
             beforeEach {
-                coreDataContext = ExCoreDataTestUtil.initDB()
+                coreDataContext = ExCoreDataTestUtil<ExampleCoreData>.initDB()
             }
             
             afterEach {
                 ExLog.log("# AfterEach")
-                ExCoreDataTestUtil.cleanDB(ExampleCoreData.self)
+                ExCoreDataTestUtil<ExampleCoreData>.cleanDB()
             }
             
             context("saveContext"){
