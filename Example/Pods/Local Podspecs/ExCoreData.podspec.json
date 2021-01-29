@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "summary": "ExCoreData provides easy ways to use CoreData.",
   "description": "ExCoreData provides easy ways to use CoreData",
-  "homepage": "https://github.com/chorokichi/ExCoreData",
+  "homepage": "https://github.com/Chorokichi/ExCoreData",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
@@ -12,13 +12,18 @@
     "Jirokichi": "kdy.developer@gmail.com"
   },
   "source": {
-    "git": "https://github.com/chorokichi/ExCoreData.git",
+    "git": "https://github.com/Chorokichi/ExCoreData.git",
     "tag": "0.2.0"
   },
   "platforms": {
     "ios": "11.0"
   },
-  "source_files": "ExCoreData/Classes/**/*",
+  "source_files": "ExCoreData/Classes/**/*.swift",
+  "resource_bundles": {
+    "ExCoreData": [
+      "ExCoreData/Classes/**/*.xcdatamodeld"
+    ]
+  },
   "dependencies": {
     "ExLog": [
 

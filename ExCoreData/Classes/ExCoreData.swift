@@ -273,7 +273,11 @@ private class CoreDataStore {
             
             self.context = {
                 let managedObjectModel: NSManagedObjectModel = {
-                    let modelURL = requiredData.bundle.url(forResource: requiredData.xcDataModelName, withExtension: "momd")!
+                    ExLog.log(requiredData.bundle)
+                    ExLog.log("requiredData.xcDataModelName: \(requiredData.xcDataModelName)")
+                    guard let modelURL = requiredData.bundle.url(forResource: requiredData.xcDataModelName, withExtension: "momd") else{
+                        fatalError()
+                    }
                     return NSManagedObjectModel(contentsOf: modelURL)!
                 }()
                 

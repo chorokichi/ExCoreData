@@ -4,6 +4,7 @@ platform :ios, '11.0'
 
 target 'ExCoreData_Example' do
   pod 'ExCoreData', :path => '../'
+  pod 'ExLog', :git => 'https://github.com/chorokichi/ExLog.git'
 
   target 'ExCoreData_Tests' do
     inherit! :search_paths
@@ -12,7 +13,5 @@ target 'ExCoreData_Example' do
     pod 'Nimble'
     pod 'FBSnapshotTestCase'
     pod 'Nimble-Snapshots'
-    
-    pod 'ExLog', :git => 'https://github.com/chorokichi/ExLog.git'
   end
 end

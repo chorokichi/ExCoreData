@@ -21,7 +21,7 @@ public class ConfigCoreData: ExCoreData {
         let data = ExCoreData.RequiredData(
             "ConfigModel",
             ConfigCoreData.packageName,
-            "ConfigModel",
+            "ConfigModelDB",
             Bundle(for: ConfigCoreData.self))
             
         return data

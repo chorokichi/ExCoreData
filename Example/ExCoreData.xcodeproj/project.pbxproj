@@ -24,8 +24,8 @@
 		FA8A185725B5D9D300BEF2BB /* SimpleUser+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57991125A0C57500922695 /* SimpleUser+CoreDataClass.swift */; };
 		FA8A185A25B5D9D600BEF2BB /* UniqueUser+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A184025B5D71500BEF2BB /* UniqueUser+CoreDataProperties.swift */; };
 		FA8A186125B5D9DA00BEF2BB /* UniqueUser+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A183F25B5D71500BEF2BB /* UniqueUser+CoreDataClass.swift */; };
-		FA8A187125B70BFF00BEF2BB /* CwlPosixPreconditionTesting in Frameworks */ = {isa = PBXBuildFile; productRef = FA8A187025B70BFF00BEF2BB /* CwlPosixPreconditionTesting */; };
-		FA8A187325B70BFF00BEF2BB /* CwlPreconditionTesting in Frameworks */ = {isa = PBXBuildFile; productRef = FA8A187225B70BFF00BEF2BB /* CwlPreconditionTesting */; };
+		FA8A187125B70BFF00BEF2BB /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = FA8A187025B70BFF00BEF2BB /* SwiftPackageProductDependency */; };
+		FA8A187325B70BFF00BEF2BB /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = FA8A187225B70BFF00BEF2BB /* SwiftPackageProductDependency */; };
 		FA8A187725B85E4600BEF2BB /* ExRecordUtilSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A187625B85E4600BEF2BB /* ExRecordUtilSpec.swift */; };
 		FA8A188025B860F400BEF2BB /* StrictUser+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A187E25B860F400BEF2BB /* StrictUser+CoreDataClass.swift */; };
 		FA8A188125B860F400BEF2BB /* StrictUser+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A187F25B860F400BEF2BB /* StrictUser+CoreDataProperties.swift */; };
@@ -90,9 +90,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA8A187125B70BFF00BEF2BB /* CwlPosixPreconditionTesting in Frameworks */,
+				FA8A187125B70BFF00BEF2BB /* BuildFile in Frameworks */,
 				130655CEB0DDBB1D4C605BED /* Pods_ExCoreData_Tests.framework in Frameworks */,
-				FA8A187325B70BFF00BEF2BB /* CwlPreconditionTesting in Frameworks */,
+				FA8A187325B70BFF00BEF2BB /* BuildFile in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,8 +257,8 @@
 			);
 			name = ExCoreData_Tests;
 			packageProductDependencies = (
-				FA8A187025B70BFF00BEF2BB /* CwlPosixPreconditionTesting */,
-				FA8A187225B70BFF00BEF2BB /* CwlPreconditionTesting */,
+				FA8A187025B70BFF00BEF2BB /* SwiftPackageProductDependency */,
+				FA8A187225B70BFF00BEF2BB /* SwiftPackageProductDependency */,
 			);
 			productName = Tests;
 			productReference = 607FACE51AFB9204008FA782 /* ExCoreData_Tests.xctest */;
@@ -296,7 +296,7 @@
 			);
 			mainGroup = 607FACC71AFB9204008FA782;
 			packageReferences = (
-				FA8A186F25B70BFF00BEF2BB /* XCRemoteSwiftPackageReference "CwlPreconditionTesting" */,
+				FA8A186F25B70BFF00BEF2BB /* RemoteSwiftPackageReference */,
 			);
 			productRefGroup = 607FACD11AFB9204008FA782 /* Products */;
 			projectDirPath = "";
@@ -400,7 +400,6 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-ExCoreData_Tests/Pods-ExCoreData_Tests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/ExLog/ExLog.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSnapshotTestCase/FBSnapshotTestCase.framework",
 				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
 				"${BUILT_PRODUCTS_DIR}/Nimble-Snapshots/Nimble_Snapshots.framework",
@@ -409,7 +408,6 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ExLog.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSnapshotTestCase.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble_Snapshots.framework",
@@ -710,7 +708,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		FA8A186F25B70BFF00BEF2BB /* XCRemoteSwiftPackageReference "CwlPreconditionTesting" */ = {
+		FA8A186F25B70BFF00BEF2BB /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mattgallagher/CwlPreconditionTesting.git";
 			requirement = {
@@ -721,14 +719,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		FA8A187025B70BFF00BEF2BB /* CwlPosixPreconditionTesting */ = {
+		FA8A187025B70BFF00BEF2BB /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = FA8A186F25B70BFF00BEF2BB /* XCRemoteSwiftPackageReference "CwlPreconditionTesting" */;
+			package = FA8A186F25B70BFF00BEF2BB /* RemoteSwiftPackageReference */;
 			productName = CwlPosixPreconditionTesting;
 		};
-		FA8A187225B70BFF00BEF2BB /* CwlPreconditionTesting */ = {
+		FA8A187225B70BFF00BEF2BB /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = FA8A186F25B70BFF00BEF2BB /* XCRemoteSwiftPackageReference "CwlPreconditionTesting" */;
+			package = FA8A186F25B70BFF00BEF2BB /* RemoteSwiftPackageReference */;
 			productName = CwlPreconditionTesting;
 		};
 /* End XCSwiftPackageProductDependency section */
