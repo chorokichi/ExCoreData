@@ -47,7 +47,7 @@ pod 'ExCoreData', :git => 'https://github.com/chorokichi/ExCoreData.git'
 
 ① `NSManagedObjectContext` をひとつの静的メソッドを呼び出すだけで簡単に初期化・生成できる方法を提供すること
 
-② 複数の DB ファイルをを対応するクラスを生成するだけで扱えるようにすること
+② 複数の DB ファイルを対応するクラスを生成するだけで扱えるようにすること
 
 ③ NSManagedObject の作成/取得/削除/更新を簡単に実行できる手段を提供すること
 
