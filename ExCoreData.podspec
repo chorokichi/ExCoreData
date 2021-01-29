@@ -30,11 +30,11 @@ ExCoreData provides easy ways to use CoreData
 
   s.ios.deployment_target = '11.0'
 
-  s.source_files = 'ExCoreData/Classes/**/*.swift'
-  
-  s.resource_bundles = {
-     'ExCoreData' => ['ExCoreData/Classes/**/*.xcdatamodeld']
-  }
+  s.source_files = 'ExCoreData/**/*.*'
+  s.resources = 'ExCoreData/Assets/*.xcdatamodeld'
+  # s.resource_bundles = {
+  #    'Model' => ['ExCoreData/Assets/*.xcdatamodeld']
+  # }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'

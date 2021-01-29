@@ -48,7 +48,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/chorokichi/ExLog.git
 
 SPEC CHECKSUMS:
-  ExCoreData: 04f3112c807cc5c3ac673e88e2bedffc64e4577b
+  ExCoreData: 658215fe30dee46dfd87e5f57c0d019894d46bd1
   ExLog: 51b9a2ae49ceb6f231c0377b983c4a1b362dd292
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
   iOSSnapshotTestCase: 9ab44cb5aa62b84d31847f40680112e15ec579a6

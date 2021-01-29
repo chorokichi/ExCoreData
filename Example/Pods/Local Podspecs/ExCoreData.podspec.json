@@ -18,12 +18,8 @@
   "platforms": {
     "ios": "11.0"
   },
-  "source_files": "ExCoreData/Classes/**/*.swift",
-  "resource_bundles": {
-    "ExCoreData": [
-      "ExCoreData/Classes/**/*.xcdatamodeld"
-    ]
-  },
+  "source_files": "ExCoreData/**/*.*",
+  "resources": "ExCoreData/Assets/*.xcdatamodeld",
   "dependencies": {
     "ExLog": [
 
