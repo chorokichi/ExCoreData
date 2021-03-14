@@ -34,8 +34,11 @@ open class ExRecordHandler<R: ExRecords> {
         }
         
         let predicate = NSPredicate(format: "\(attr) == %@", value)
-        guard let records = try? self.fetchRecords(context, predicate: predicate) else {
-            fatalError("fetchRecords中にエラー発生")
+        let records: [R]
+        do{
+            records = try self.fetchRecords(context, predicate: predicate)
+        }catch{
+            fatalError("fetchRecords中にエラー発生: (\(error)")
         }
         
         // 取得レコード数に応じて処理分け(2件以上はありえないはず)
