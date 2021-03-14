@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ExCoreData'
-  s.version          = '0.2.1'
+  s.version          = '0.2.2'
   s.summary          = 'ExCoreData provides easy ways to use CoreData.'
 
 # This description is used to generate tags and improve search results.

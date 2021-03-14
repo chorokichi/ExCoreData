@@ -63,12 +63,7 @@ open class ExConfig: ExRecords{
     /// - Throws: NSManagedObjectContect#fetch呼び出し時のエラー
     public static func getStrictly(key: String) throws -> String? {
         assert(Thread.isMainThread)
-        do {
-            return try getConfig(key: key, in: ConfigCoreData.getContext()!)?.value
-        } catch {
-            ExLog.error(error)
-            return nil
-        }
+        return try getConfig(key: key, in: ConfigCoreData.getContext()!)?.value
     }
     
     public static func delete(key: String) {
@@ -88,7 +83,7 @@ open class ExConfig: ExRecords{
     
     private static func getConfig(key: String, in context: NSManagedObjectContext) throws -> ExConfig? {
         let predicate = NSPredicate(format: "\(Params.Key) = %@", key)
-        let configs = try ExConfig.fetchRecords(context, predicate: predicate, type: ExConfig.self)
+        let configs = try ExRecordHandler<ExConfig>().fetchRecords(context, predicate: predicate)
         if configs.count == 1 {
             return configs[0]
         } else if configs.count > 1{
