@@ -24,12 +24,13 @@
 		FA8A185725B5D9D300BEF2BB /* SimpleUser+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA57991125A0C57500922695 /* SimpleUser+CoreDataClass.swift */; };
 		FA8A185A25B5D9D600BEF2BB /* UniqueUser+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A184025B5D71500BEF2BB /* UniqueUser+CoreDataProperties.swift */; };
 		FA8A186125B5D9DA00BEF2BB /* UniqueUser+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A183F25B5D71500BEF2BB /* UniqueUser+CoreDataClass.swift */; };
-		FA8A187125B70BFF00BEF2BB /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = FA8A187025B70BFF00BEF2BB /* SwiftPackageProductDependency */; };
-		FA8A187325B70BFF00BEF2BB /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = FA8A187225B70BFF00BEF2BB /* SwiftPackageProductDependency */; };
+		FA8A187125B70BFF00BEF2BB /* CwlPosixPreconditionTesting in Frameworks */ = {isa = PBXBuildFile; productRef = FA8A187025B70BFF00BEF2BB /* CwlPosixPreconditionTesting */; };
+		FA8A187325B70BFF00BEF2BB /* CwlPreconditionTesting in Frameworks */ = {isa = PBXBuildFile; productRef = FA8A187225B70BFF00BEF2BB /* CwlPreconditionTesting */; };
 		FA8A187725B85E4600BEF2BB /* ExRecordUtilSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A187625B85E4600BEF2BB /* ExRecordUtilSpec.swift */; };
 		FA8A188025B860F400BEF2BB /* StrictUser+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A187E25B860F400BEF2BB /* StrictUser+CoreDataClass.swift */; };
 		FA8A188125B860F400BEF2BB /* StrictUser+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8A187F25B860F400BEF2BB /* StrictUser+CoreDataProperties.swift */; };
 		FAC0D80225BD8E9500303872 /* ExConfigSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC0D7FC25BD8E6C00303872 /* ExConfigSpec.swift */; };
+		FAC7346F25FC192900A24CD1 /* ExRecordHandlerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC7346E25FC192900A24CD1 /* ExRecordHandlerSpec.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +76,7 @@
 		FA8A187E25B860F400BEF2BB /* StrictUser+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StrictUser+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FA8A187F25B860F400BEF2BB /* StrictUser+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StrictUser+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FAC0D7FC25BD8E6C00303872 /* ExConfigSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExConfigSpec.swift; sourceTree = "<group>"; };
+		FAC7346E25FC192900A24CD1 /* ExRecordHandlerSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExRecordHandlerSpec.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,9 +92,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA8A187125B70BFF00BEF2BB /* BuildFile in Frameworks */,
+				FA8A187125B70BFF00BEF2BB /* CwlPosixPreconditionTesting in Frameworks */,
 				130655CEB0DDBB1D4C605BED /* Pods_ExCoreData_Tests.framework in Frameworks */,
-				FA8A187325B70BFF00BEF2BB /* BuildFile in Frameworks */,
+				FA8A187325B70BFF00BEF2BB /* CwlPreconditionTesting in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,6 +152,7 @@
 			children = (
 				FAC0D7FB25BD8E5F00303872 /* Config */,
 				FA8A182E25B36D9400BEF2BB /* ExRecordsSpec.swift */,
+				FAC7346E25FC192900A24CD1 /* ExRecordHandlerSpec.swift */,
 				607FACEB1AFB9204008FA782 /* ExCoreDataSpec.swift */,
 				FA8A187625B85E4600BEF2BB /* ExRecordUtilSpec.swift */,
 				FA8A17D425B333C400BEF2BB /* ExCoreDataMessureTests.swift */,
@@ -257,8 +260,8 @@
 			);
 			name = ExCoreData_Tests;
 			packageProductDependencies = (
-				FA8A187025B70BFF00BEF2BB /* SwiftPackageProductDependency */,
-				FA8A187225B70BFF00BEF2BB /* SwiftPackageProductDependency */,
+				FA8A187025B70BFF00BEF2BB /* CwlPosixPreconditionTesting */,
+				FA8A187225B70BFF00BEF2BB /* CwlPreconditionTesting */,
 			);
 			productName = Tests;
 			productReference = 607FACE51AFB9204008FA782 /* ExCoreData_Tests.xctest */;
@@ -296,7 +299,7 @@
 			);
 			mainGroup = 607FACC71AFB9204008FA782;
 			packageReferences = (
-				FA8A186F25B70BFF00BEF2BB /* RemoteSwiftPackageReference */,
+				FA8A186F25B70BFF00BEF2BB /* XCRemoteSwiftPackageReference "CwlPreconditionTesting" */,
 			);
 			productRefGroup = 607FACD11AFB9204008FA782 /* Products */;
 			projectDirPath = "";
@@ -446,6 +449,7 @@
 				607FACEC1AFB9204008FA782 /* ExCoreDataSpec.swift in Sources */,
 				FA8A187725B85E4600BEF2BB /* ExRecordUtilSpec.swift in Sources */,
 				FAC0D80225BD8E9500303872 /* ExConfigSpec.swift in Sources */,
+				FAC7346F25FC192900A24CD1 /* ExRecordHandlerSpec.swift in Sources */,
 				FA8A17D525B333C400BEF2BB /* ExCoreDataMessureTests.swift in Sources */,
 				FA8A17C125B32E5B00BEF2BB /* ExCoreDataTestUtil.swift in Sources */,
 			);
@@ -708,7 +712,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		FA8A186F25B70BFF00BEF2BB /* RemoteSwiftPackageReference */ = {
+		FA8A186F25B70BFF00BEF2BB /* XCRemoteSwiftPackageReference "CwlPreconditionTesting" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mattgallagher/CwlPreconditionTesting.git";
 			requirement = {
@@ -719,14 +723,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		FA8A187025B70BFF00BEF2BB /* SwiftPackageProductDependency */ = {
+		FA8A187025B70BFF00BEF2BB /* CwlPosixPreconditionTesting */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = FA8A186F25B70BFF00BEF2BB /* RemoteSwiftPackageReference */;
+			package = FA8A186F25B70BFF00BEF2BB /* XCRemoteSwiftPackageReference "CwlPreconditionTesting" */;
 			productName = CwlPosixPreconditionTesting;
 		};
-		FA8A187225B70BFF00BEF2BB /* SwiftPackageProductDependency */ = {
+		FA8A187225B70BFF00BEF2BB /* CwlPreconditionTesting */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = FA8A186F25B70BFF00BEF2BB /* RemoteSwiftPackageReference */;
+			package = FA8A186F25B70BFF00BEF2BB /* XCRemoteSwiftPackageReference "CwlPreconditionTesting" */;
 			productName = CwlPreconditionTesting;
 		};
 /* End XCSwiftPackageProductDependency section */

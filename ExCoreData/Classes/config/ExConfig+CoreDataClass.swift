@@ -44,31 +44,57 @@ open class ExConfig: ExRecords{
         return  newConfig
     }
     
+    /// keyの値を取得する。存在しない場合、取得時にエラーが発生した場合はnilを返す。
+    /// - Parameter key: キー
+    /// - Returns: 値
     public static func get(key: String) -> String? {
         assert(Thread.isMainThread)
-        return getConfig(key: key, in: ConfigCoreData.getContext()!)?.value
+        do {
+            return try getConfig(key: key, in: ConfigCoreData.getContext()!)?.value
+        } catch {
+            ExLog.error(error)
+            return nil
+        }
+    }
+    
+    // keyの値を取得する。存在しない場合、nilを返す。
+    /// - Parameter key: キー
+    /// - Returns: 値
+    /// - Throws: NSManagedObjectContect#fetch呼び出し時のエラー
+    public static func getStrictly(key: String) throws -> String? {
+        assert(Thread.isMainThread)
+        do {
+            return try getConfig(key: key, in: ConfigCoreData.getContext()!)?.value
+        } catch {
+            ExLog.error(error)
+            return nil
+        }
     }
     
     public static func delete(key: String) {
         assert(!key.isEmpty)
         assert(Thread.isMainThread)
         let context = ConfigCoreData.getContext()!
-        if let config = getConfig(key: key, in: context) {
-            config.delete()
+        do{
+            if let config = try getConfig(key: key, in: context) {
+                config.delete()
+            }else{
+                ExLog.error("Not found any value of this key(\(key)).")
+            }
+        }catch{
+            ExLog.error(error)
         }
     }
     
-    private static func getConfig(key: String, in context: NSManagedObjectContext) -> ExConfig? {
+    private static func getConfig(key: String, in context: NSManagedObjectContext) throws -> ExConfig? {
         let predicate = NSPredicate(format: "\(Params.Key) = %@", key)
-        do {
-            let configs = try ExConfig.fetchRecords(context, predicate: predicate, type: ExConfig.self)
-            if configs.count == 1 {
-                return configs[0]
-            } else {
-                return nil
-            }
-        } catch {
-            ExLog.error(error)
+        let configs = try ExConfig.fetchRecords(context, predicate: predicate, type: ExConfig.self)
+        if configs.count == 1 {
+            return configs[0]
+        } else if configs.count > 1{
+            ExLog.error("There should not be greater than or equal to 2 configs with one key.[key: \(key)]")
+            return configs[0]
+        } else {
             return nil
         }
     }

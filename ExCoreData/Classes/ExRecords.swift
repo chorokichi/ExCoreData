@@ -92,43 +92,15 @@ open class ExRecords: NSManagedObject {
     }
     
     /// typeを引数に設定しないと宣言時に明示的にDKRecordsのサブクラスを設定する必要があり、実行時エラーの原因になる。そのため、typeをメソッド呼び出し時に強制することでそのエラーを抑えることを狙っている。
+    @available(*, deprecated, message: "This will be removed in near future. Please use ExRecordHandler instead of this.")
     public static func fetchRecords<T: ExRecords>(_ context: NSManagedObjectContext, sortDescriptors: [NSSortDescriptor] = [], predicate: NSPredicate? = nil, type: T.Type) throws -> [T] {
-        let fetchRequest: NSFetchRequest<T> = self.fetchRequest()
-        if sortDescriptors.count > 0 {
-            fetchRequest.sortDescriptors = sortDescriptors
-        }
-        
-        if let predicate = predicate {
-            fetchRequest.predicate = predicate
-        }
-        
-        let records: [T] = try context.fetch(fetchRequest)
-        return records
+        return try ExRecordHandler<T>().fetchRecords(context, sortDescriptors: sortDescriptors, predicate: predicate)
     }
     
     /// typeを引数に設定しないと宣言時に明示的にDKRecordsのサブクラスを設定する必要があり、実行時エラーの原因になる。そのため、typeをメソッド呼び出し時に強制することでそのエラーを抑えることを狙っている。
+    @available(*, deprecated, message: "This will be removed in near future. Please use ExRecordHandler instead of this.")
     public static func fetchOneRecord<T: ExRecords>(_ context: NSManagedObjectContext, valueOfPrimaryAttribute value: String, type: T.Type) -> T? {
-        guard let attr = PrimaryAttribute else {
-            // 主キーがない
-            return nil
-        }
-        
-        let predicate = NSPredicate(format: "\(attr) == %@", value)
-        guard let records: [T] = try? self.fetchRecords(context, predicate: predicate, type: type) else {
-            assertionFailure("fetchRecords中にエラー発生")
-            return nil
-        }
-        
-        // 取得レコード数に応じて処理分け(2件以上はありえないはず)
-        if records.count == 1 {
-            return records[0]
-        } else if records.count == 0 {
-            return nil
-        } else {
-            assertionFailure("主キーによる検索にもかかわらず結果が\(records.count)件！！！！")
-            return nil
-        }
-        
+        return ExRecordHandler<T>().fetchOneRecord(context, valueOfPrimaryAttribute: value)
     }
     
     /// すべてのレコードを削除する[永続はされない]
